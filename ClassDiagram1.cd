@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CameraMovement" Collapsed="true">
+    <Position X="9" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAiAkAAAAgAAAABAAQAAAAAAAAAgAAAAACAA=</HashCode>
+      <FileName>Assets\Code\CameraMovement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="My2DCharacterController" Collapsed="true">
+    <Position X="14.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYBAAgAAiAAABESAAAAAAAAAABIAHAIAAAgCAAAgAA=</HashCode>
+      <FileName>Assets\Code\Tools\My2DCharacterController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Code.Creature.Character.Character" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAQAAAAgAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Assets\Code\Creature\Character\Character.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Code.Creature.Character.TimeMachine" Collapsed="true">
+    <Position X="9" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAACAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Code\Creature\Character\TimeMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Code.Creature.Enemy.Enemy" Collapsed="true">
+    <Position X="12.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Code\Creature\Enemy\Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Code.Creature.Enemy.PatrollingEnemy" Collapsed="true">
+    <Position X="10.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Code\Creature\Enemy\PatrollingEnemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Code.Creature.Enemy.StationaryEnemy" Collapsed="true">
+    <Position X="14.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Code\Creature\Enemy\StationaryEnemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Code.LivingCreature" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACACAAAAAAAAgAAAAAAAQAIAAAAAAAAwAAAQAAAA=</HashCode>
+      <FileName>Assets\Code\Creature\LivingCreature.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Code.Tools.Score" Collapsed="true">
+    <Position X="12.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Code\Tools\Score.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Code.Tools.UIManager" Collapsed="true">
+    <Position X="12.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQEBAAAAAAAgAAAIgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Code\Tools\UIManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Code.World.Chunk.Chunk" Collapsed="true">
+    <Position X="10.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAQAAAAQAAQIAAAAAAAAEAAIBAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Code\World\Chunk\Chunk.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Code.World.Obstacle.Decorator.BlipDecorator" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAgAA=</HashCode>
+      <FileName>Assets\Code\World\Obstacle\Decorator\Blip\BlipDecorator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Code.World.Obstacle.Decorator.DynamicMovementDecorator" Collapsed="true">
+    <Position X="7.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAgAA=</HashCode>
+      <FileName>Assets\Code\World\Obstacle\Decorator\Movement\DynamicMovementDecorator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Code.World.Obstacle.Decorator.MovementDecorator" Collapsed="true">
+    <Position X="6" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAgAA=</HashCode>
+      <FileName>Assets\Code\World\Obstacle\Decorator\Movement\MovementDecorator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Code.World.Obstacle.Decorator.StaticMovementDecorator" Collapsed="true">
+    <Position X="5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAgAA=</HashCode>
+      <FileName>Assets\Code\World\Obstacle\Decorator\Movement\StaticMovementDecorator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Code.World.Obstacle.Decorator.ObstacleDecorator" Collapsed="true">
+    <Position X="5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAQAAAAAgAA=</HashCode>
+      <FileName>Assets\Code\World\Obstacle\Decorator\ObstacleDecorator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Assets.Code.World.Obstacle.Obstacle" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAgAA=</HashCode>
+      <FileName>Assets\Code\World\Obstacle\Obstacle.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.648" />
+  </Class>
+  <Class Name="Assets.Code.World.World" Collapsed="true">
+    <Position X="14.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Code\World\World.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Code.World.WorldGenerator" Collapsed="true">
+    <Position X="9" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Code\World\WorldGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Code.Tools.Timer" Collapsed="true">
+    <Position X="10.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAEQAAEABAAAgAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>Assets\Code\Tools\Timer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Assets.Code.World.Obstacle.IObstacle" Collapsed="true">
+    <Position X="3.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAgAA=</HashCode>
+      <FileName>Assets\Code\World\Obstacle\IObstacle.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
