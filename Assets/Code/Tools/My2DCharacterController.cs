@@ -91,7 +91,7 @@ public class My2DCharacterController : MonoBehaviour
         float curSpeedX = Input.GetAxis("Horizontal") * characterSpeed;
         if (curSpeedX > 0f && Camera.GetComponent<CameraMovement>().isInMaxLimit()) //If player tries to move forward but is in the camera follow limit, then move the entire world to back
         {
-            World.MoveChunks(curSpeedX * -1); //-1 is because world should move left (not right)
+            World.MoveChunks(curSpeedX * -1 * Time.deltaTime); //-1 is because world should move left (not right)
             currentSpeed.x = 0;
         }
         else

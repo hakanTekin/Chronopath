@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Code.World.Obstacle.Decorator
 {
     class BlipDecorator:ObstacleDecorator
     {
+        private int score = 50;
+        public override int Score { get => score; set => score = value; }
         public BlipDecorator(IObstacle w) : base(w)
         {
-
+            Score += w.Score;
         }
 
         public string GetType()
@@ -18,9 +21,10 @@ namespace Assets.Code.World.Obstacle.Decorator
             throw new NotImplementedException();
         }
 
-        public void UpdateObstacle()
+        public override void UpdateObstacle()
         {
-            throw new NotImplementedException();
+            wrappee.UpdateObstacle();
+            Debug.Log("BlipDecoratorUpdate");
         }
     }
 }

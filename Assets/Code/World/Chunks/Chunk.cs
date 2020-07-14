@@ -24,7 +24,6 @@ namespace Assets.Code.World.Chunks
         /// </summary>
         private int maxObjectScore;
         public int MaxObjectScore { get => maxObjectScore; }
-
         public float Size { get => size; set => size = value; }
        
         /*
@@ -32,14 +31,14 @@ namespace Assets.Code.World.Chunks
          * The children are of Type Enemy and IObstacle.
          * Each gameObject should be instantiated, therefore when destroying them Destroy() method should be used for each item
          */
-        public Enemy[] Enemies { get => enemies; set => enemies = value; }
-        public IObstacle[] Obstacles { get => obstacles; set => obstacles = value; }
+        public Enemy[] Enemies { get => enemies; }
+        public IObstacle[] Obstacles { get => obstacles; }
         public int Id { get => id; set => id = value; }
         public Vector2 LeftMostPosition { get => leftMostPosition; set => leftMostPosition = value; }
 
         private void Awake()
         {
-            Enemies = new Enemy[maxNumberOfEnemies];
+            enemies = new Enemy[maxNumberOfEnemies];
             obstacles = new IObstacle[maxNumberOfObstacles];
             maxObjectScore = 1000;
         }
@@ -68,6 +67,17 @@ namespace Assets.Code.World.Chunks
             return false;
         }            
 
+        public bool AddObstacle(IObstacle obstacle)
+        {
+            for(int i=0; i<obstacles.Length; i++)
+            {
+                if(obstacles[i] == null)
+                {
+                    obstacles[i] = obstacle;
+                }
+            }
 
+            return true;
+        }
     }
 }

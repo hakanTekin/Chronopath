@@ -74,14 +74,14 @@ namespace Assets.Code.World
         }
         public Chunk CreateNewChunk()
         {
-            try {
+           
                 //If there is not enough room in the chunk buffer, no chunk should be created
                 //In theory, this exception should never be thrown since chunks should be deleted after player passes them 
                     //(and the further buffers should be no more than the buffer size)
                 if (activeChunks >= Chunks.Length)
                     throw new Exception("Chunk Buffer Full");
 
-                Chunk chunk = WorldGenerator.GenerateChunk(new Vector2(GetRightmost(), 0)).GetComponent<Chunk>();
+                Chunk chunk = WorldGenerator.GenerateChunk(new Vector2(GetRightmost(), 0));
                 activeChunks++;
                 chunksCreated++;
                 for(int i = 0; i<Chunks.Length; i++)
@@ -91,26 +91,23 @@ namespace Assets.Code.World
                         Chunks[i] = chunk;
                         break;
                     }
-                        
+
                 }
-                Debug.Log("Created Chunk");
                 return chunk;
 
-            } catch(Exception e) {
-                Debug.LogError(e.Message);
-                return null;
-            }            
+                    
         }
         private int RemoveUnusedChunks(int index)
         {
-            Destroy(Chunks[index]);
+            Destroy(Chunks[index].gameObject);
             Chunks[index] = null;
             activeChunks--;
             return 0;
         }
         public void MoveChunks(float deltaX)
         {
-            UpdateChunks(movementDelta:deltaX);
+            Debug.Log("Moving By : " + deltaX);
+            UpdateChunks(movementDelta: deltaX );
         }
 
         public void ChangeWorldTime(float delta)
@@ -130,8 +127,9 @@ namespace Assets.Code.World
             {
                 if (Chunks[i] != null)
                 {
+                    Debug.Log("Chunk not null");
                     c = Chunks.ElementAt(i);
-                    if (movementDelta > 0f)
+                    if (Math.Abs(movementDelta) > 0f)
                     {  
                         c.MoveChunk(movementDelta);
                         //If chunk's rightmost position is now behind the player, then it cannot be seen again. Therefore it can be destoyed.

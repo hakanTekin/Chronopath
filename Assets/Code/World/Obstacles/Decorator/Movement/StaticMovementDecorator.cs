@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Assets.Code.World.Obstacle.Decorator
 {
     class StaticMovementDecorator:MovementDecorator
     {
+        private int score = 50;
+        public override int Score { get => score; set => score = wrappee.Score + value; }
         public StaticMovementDecorator(IObstacle w) : base(w)
         {
 
@@ -18,9 +22,10 @@ namespace Assets.Code.World.Obstacle.Decorator
             throw new NotImplementedException();
         }
 
-        public void UpdateObstacle()
+        public override void UpdateObstacle()
         {
-            throw new NotImplementedException();
+            wrappee.UpdateObstacle();
+            Debug.Log("StaticMovementUpdate");
         }
     }
 }

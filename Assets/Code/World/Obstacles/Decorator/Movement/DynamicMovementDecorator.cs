@@ -8,6 +8,8 @@ namespace Assets.Code.World.Obstacle.Decorator
 {
     class DynamicMovementDecorator:MovementDecorator
     {
+        private int score = 100;
+        public override int Score { get => score; set => score = wrappee.Score + value; }
         public DynamicMovementDecorator(IObstacle w) : base(w)
         {
 
@@ -18,7 +20,7 @@ namespace Assets.Code.World.Obstacle.Decorator
             throw new NotImplementedException();
         }
 
-        public void UpdateObstacle()
+        public override void UpdateObstacle()
         {
             throw new NotImplementedException();
         }

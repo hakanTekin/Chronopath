@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Code.World.Obstacle.Decorator
 {
     class MovementDecorator : ObstacleDecorator
     {
+        private int score = 0;
+        public override int Score { get => score; set => score = wrappee.Score + value; }
         public MovementDecorator(IObstacle w):base(w)
         {
-
         }
 
         public string GetType()
@@ -18,9 +20,10 @@ namespace Assets.Code.World.Obstacle.Decorator
             throw new NotImplementedException();
         }
 
-        public void UpdateObstacle()
+        public override void UpdateObstacle()
         {
-            throw new NotImplementedException();
+            wrappee.UpdateObstacle();
+            Debug.Log("MovementDecoratorUpdate");
         }
     }
 }

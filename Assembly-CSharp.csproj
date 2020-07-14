@@ -83,7 +83,8 @@
     <Compile Include="Assets\Code\World\Obstacles\IObstacle.cs" />
     <Compile Include="Assets\Code\World\Obstacles\Obstacle.cs" />
     <Compile Include="Assets\Code\World\World.cs" />
-    <Compile Include="Assets\Code\World\WorldGenerator.cs" />
+    <Compile Include="Assets\Code\World\WorldGeneration\ObjectFactory.cs" />
+    <Compile Include="Assets\Code\World\WorldGeneration\WorldGenerator.cs" />
     <Reference Include="UnityEngine">
       <HintPath>D:/UnityEditors/2019.4.1f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
