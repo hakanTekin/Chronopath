@@ -60,7 +60,7 @@ namespace Assets.Code.World
                     if(Chunks[i] != null)
                     {
                         tempChunk = Chunks[i];
-                        float goPos = tempChunk.gameObject.transform.position.x + tempChunk.Size / 2;
+                        float goPos = tempChunk.gameObject.transform.position.x + tempChunk.Size.x / 2;
                         if (goPos > tempRM)
                         {
                             tempRM = goPos;
@@ -106,7 +106,6 @@ namespace Assets.Code.World
         }
         public void MoveChunks(float deltaX)
         {
-            Debug.Log("Moving By : " + deltaX);
             UpdateChunks(movementDelta: deltaX );
         }
 
@@ -133,7 +132,7 @@ namespace Assets.Code.World
                     {  
                         c.MoveChunk(movementDelta);
                         //If chunk's rightmost position is now behind the player, then it cannot be seen again. Therefore it can be destoyed.
-                        if (c.transform.position.x + c.Size / 2 < player.transform.position.x + chunkRemovalPositionOffset)
+                        if (c.transform.position.x + c.Size.x / 2 < player.transform.position.x + chunkRemovalPositionOffset)
                             RemoveUnusedChunks(i);
                     }
                     if(timeDelta != 0f) //Time is being altered. Update chunk blippers

@@ -3,18 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Code.World.Obstacle.Decorator
 {
     class DynamicMovementDecorator:MovementDecorator
     {
-        private int score = 100;
-        public override int Score { get => score; set => score = wrappee.Score + value; }
-        public DynamicMovementDecorator(IObstacle w) : base(w)
+        /// <summary>
+        /// <br>A moving obstacle.</br>
+        /// <br><paramref name="path"/> should contain the direction and lengt of this object's movement</br>
+        /// </summary>
+        /// <param name="w"></param>
+        /// <param name="path"></param>
+        
+        
+        [SerializeField] private static int score = 50;
+        public DynamicMovementDecorator(IObstacle w, Vector2 path) : base(w)
         {
-
+            Score = score + base.Score;
         }
-
         public string GetType()
         {
             throw new NotImplementedException();
@@ -22,7 +29,8 @@ namespace Assets.Code.World.Obstacle.Decorator
 
         public override void UpdateObstacle()
         {
-            throw new NotImplementedException();
+            wrappee.UpdateObstacle();
+            Debug.Log("Dyanmic Updated");
         }
     }
 }

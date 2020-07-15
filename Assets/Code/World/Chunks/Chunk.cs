@@ -13,10 +13,15 @@ namespace Assets.Code.World.Chunks
     {
         public static int maxNumberOfEnemies = 5;
         public static int maxNumberOfObstacles = 20;
+
         private Enemy[] enemies;
         private IObstacle[] obstacles;
-        private Vector2 leftMostPosition;
-        private float size;
+
+        [SerializeField] private int obstalcesCreated = 0;
+        [SerializeField] private int enemiesCreated = 0;
+
+        [SerializeField] private Vector2 leftMostPosition;
+        [SerializeField] private Vector2 size;
         private int id;
 
         /// <summary>
@@ -24,7 +29,7 @@ namespace Assets.Code.World.Chunks
         /// </summary>
         private int maxObjectScore;
         public int MaxObjectScore { get => maxObjectScore; }
-        public float Size { get => size; set => size = value; }
+        public Vector2 Size { get => size; set => size = value; }
        
         /*
          * Chunks are gameObjects that contain multiple other gameObjects
@@ -35,6 +40,8 @@ namespace Assets.Code.World.Chunks
         public IObstacle[] Obstacles { get => obstacles; }
         public int Id { get => id; set => id = value; }
         public Vector2 LeftMostPosition { get => leftMostPosition; set => leftMostPosition = value; }
+        public int EnemiesCreated { get => enemiesCreated; set => enemiesCreated = value; }
+        public int ObstalcesCreated { get => obstalcesCreated; set => obstalcesCreated = value; }
 
         private void Awake()
         {
@@ -74,10 +81,12 @@ namespace Assets.Code.World.Chunks
                 if(obstacles[i] == null)
                 {
                     obstacles[i] = obstacle;
+                    this.ObstalcesCreated++;
+                    return true;
                 }
             }
 
-            return true;
+            return false;
         }
     }
 }

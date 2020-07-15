@@ -12,7 +12,7 @@ namespace Assets.Code.World.Obstacle
     {
         Vector2 size;
         BoxCollider2D collider;
-        private int score = 100;
+        private int score = 0;
         public int Score { get => score; set => score = value; }
 
         private void Awake()
@@ -28,7 +28,7 @@ namespace Assets.Code.World.Obstacle
 
         public void UpdateObstacle()
         {
-            Debug.Log("ObstacleUpdate");
+            Debug.Log("Obstacle Updated");
         }
 
         GameObject IObstacle.GetGameObject()

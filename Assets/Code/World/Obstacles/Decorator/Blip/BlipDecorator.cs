@@ -13,7 +13,8 @@ namespace Assets.Code.World.Obstacle.Decorator
         public override int Score { get => score; set => score = value; }
         public BlipDecorator(IObstacle w) : base(w)
         {
-            Score += w.Score;
+            
+            Score = score + base.Score;
         }
 
         public string GetType()

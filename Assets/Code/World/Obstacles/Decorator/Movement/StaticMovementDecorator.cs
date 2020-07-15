@@ -10,11 +10,11 @@ namespace Assets.Code.World.Obstacle.Decorator
 {
     class StaticMovementDecorator:MovementDecorator
     {
-        private int score = 50;
-        public override int Score { get => score; set => score = wrappee.Score + value; }
+        [SerializeField] private static int score = 50;
         public StaticMovementDecorator(IObstacle w) : base(w)
         {
-
+            
+            Score = score + base.Score;
         }
 
         public string GetType()

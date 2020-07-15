@@ -11,13 +11,15 @@ namespace Assets.Code.World.Obstacle.Decorator
     class ObstacleDecorator : IObstacle
     {
         protected IObstacle wrappee;
-        
+        protected int score = 0;
+
         public ObstacleDecorator(IObstacle w)
         {
+            
             this.wrappee = w;
             Score += w.Score;
         }
-        private int score = 117;
+        
         public virtual int Score { get => score; set => score = value; }
 
         public GameObject GetGameObject()
@@ -28,7 +30,7 @@ namespace Assets.Code.World.Obstacle.Decorator
         public virtual void UpdateObstacle()
         {
             wrappee.UpdateObstacle();
-            Debug.Log("ObstacleDecoratorUpdate");
+            Debug.Log("Obstacle Decorator Updated");
         }
 
         string IObstacle.GetType()
