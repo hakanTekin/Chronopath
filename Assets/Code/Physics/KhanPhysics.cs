@@ -9,6 +9,6 @@ namespace Assets.Code.Physics
 {
     static class KhanPhysics
     {
-        public static ApplyGravity(GameObject o, float gravity, float deltaTime) { }
+        public static void ApplyGravity(GameObject o, float gravity, float deltaTime) { }
     }
 }

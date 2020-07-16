@@ -1,5 +1,6 @@
 ﻿
 using Assets.Code.World;
+using Assets.Code.World.Chunks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,19 @@ public class My2DCharacterController : MonoBehaviour
 {
     public BoxCollider2D collisionBox;
     public float gravity;
-    public Vector2 currentSpeed;
+
+    /// <summary>
+    /// Real speed is the raw combination of all forces applied to this object. 
+    /// </summary>
+    public Vector2 realSpeed;
+    /// <summary>
+    /// Processed version of realSpeed. If the surrounding object are to move instead of character, this is necessary
+    /// </summary>
+    private Vector2 worldSpeed;
 
     public Rigidbody2D rigid;
+
+    private bool isMovingWorld;
 
     private Dictionary<Collider2D, Vector2> collisions = new Dictionary<Collider2D, Vector2>();
 
@@ -36,28 +47,46 @@ public class My2DCharacterController : MonoBehaviour
         World = FindObjectOfType<World>();
     }
 
+    void Update()
+    {
+        //Handling input
+        realSpeed.x = Input.GetAxis("Horizontal") * characterSpeed;
+        worldSpeed.x = realSpeed.x;
+
+        isMovingWorld = realSpeed.x > 0f && (CameraMovement != null) && CameraMovement.isInMaxLimit();
+       
+        if (Input.GetButtonDown("Jump") && isGrounded)
+            Jump(jumpForce);
+    }
+
     void FixedUpdate()
     {
         if(!IsGrounded())
             ApplyGravity(); //Checks for and applies gravity
 
         //If character is touching ground, then there is no point having a velocity in negative y direction
-        if (isGrounded && currentSpeed.y < 0)
-            currentSpeed.y = 0;
+        if (isGrounded && realSpeed.y < 0)
+        {
+            realSpeed.y = 0;
+            
+        }
+            
 
         //Change where the character is looking according to its speed
-        if (currentSpeed.x < 0)
-            gameObject.transform.forward = Vector3.back;
-        else if (currentSpeed.x > 0)
-            gameObject.transform.forward = Vector3.forward;
+        ApplyReactionSpeedToCollisions();
 
-        if (currentSpeed.magnitude > 0 || isGrounded) //No need to apply a reaction force if there is no movement
-        { 
+        worldSpeed = realSpeed;
+        if (isMovingWorld) //If player tries to move forward but is in the camera follow limit, then move the entire world to back      
+            worldSpeed.x = 0;
 
-            ApplyReactionSpeedToCollisions();
-            currentSpeed.x = Math.Abs(currentSpeed.x);
-            MoveTo(currentSpeed);
+        if (isMovingWorld)
+        {
+            Debug.Log(realSpeed.x);
+            World.MoveChunks(realSpeed.x * -1 * Time.deltaTime);
         }
+
+        MoveTo(worldSpeed);
+
     }
 
 
@@ -70,33 +99,14 @@ public class My2DCharacterController : MonoBehaviour
         foreach (KeyValuePair<Collider2D, Vector2> kvp in collisions)
         {
             Vector2 temp = kvp.Value;
-            float dotValue = Vector2.Dot(currentSpeed, temp);
-            Debug.Log(kvp.Value);
+            float dotValue = Vector2.Dot(realSpeed, temp);
             if (dotValue > 0 && kvp.Key.IsTouching(collisionBox))
             {
                 Vector2 speedInRotationToBeDisabled = temp * dotValue * -1;
-                currentSpeed.x += speedInRotationToBeDisabled.x;
-                currentSpeed.y += speedInRotationToBeDisabled.y;
+                realSpeed.x += speedInRotationToBeDisabled.x;
+                realSpeed.y += speedInRotationToBeDisabled.y;
             }
         }
-    }
-    void Update()
-    {
-        //Handling input
-        float curSpeedX = Input.GetAxis("Horizontal") * characterSpeed;
-        //float curSpeedX = 1 * characterSpeed;
-        if (CameraMovement != null && curSpeedX > 0f && CameraMovement.isInMaxLimit()) //If player tries to move forward but is in the camera follow limit, then move the entire world to back
-        {
-            World.MoveChunks(curSpeedX * -1 * Time.deltaTime); //-1 is because world should move left (not right)
-            currentSpeed.x = 0;
-        }
-        else
-        {
-            currentSpeed.x = curSpeedX;
-        }
-
-        if (Input.GetButtonDown("Jump") && isGrounded)
-            Jump(jumpForce);
     }
     
     private void OnCollisionEnter2D(Collision2D c)
@@ -116,7 +126,7 @@ public class My2DCharacterController : MonoBehaviour
     /// <returns>Vector of magnitude 1 in the direction of surface normal</returns>
     private Vector2 CalculateCollisionDirection(Collision2D collision)
     {
-        Vector2 v = collision.GetContact(0).normal;      
+        Vector2 v = collision.GetContact(0).normal;
         return v * -1;
     }
 
@@ -127,7 +137,8 @@ public class My2DCharacterController : MonoBehaviour
     internal void Jump(float jumpForce)
     {
         isGrounded = false;
-        currentSpeed += new Vector2(0, jumpForce); 
+        realSpeed += new Vector2(0, jumpForce);
+        worldSpeed += new Vector2(0, jumpForce);
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -184,8 +195,8 @@ public class My2DCharacterController : MonoBehaviour
     /// </summary>
     private void ApplyGravity()
     {
-        IsGrounded();
-        currentSpeed.y += gravity * Time.deltaTime;
+        realSpeed.y += gravity * Time.deltaTime;
+        worldSpeed.y += gravity * Time.deltaTime;
     }
 
     /// <summary>
