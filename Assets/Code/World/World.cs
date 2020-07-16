@@ -129,7 +129,7 @@ namespace Assets.Code.World
                     {  
                         c.MoveChunk(movementDelta);
                         //If chunk's rightmost position is now behind the player, then it cannot be seen again. Therefore it can be destoyed.
-                        if (c.transform.position.x + c.Size.x / 2 < player.transform.position.x + chunkRemovalPositionOffset)
+                        if (c.transform.position.x + c.Size.x / 2 < player.transform.position.x - chunkRemovalPositionOffset)
                             RemoveUnusedChunks(i);
                     }
                     if(timeDelta != 0f) //Time is being altered. Update chunk blippers
