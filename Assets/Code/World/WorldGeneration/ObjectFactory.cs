@@ -21,19 +21,22 @@ namespace Assets.Code.World.WorldGeneration
             Chunk c = nc.AddComponent<Chunk>();
             c.Id = chunkID++;
             c.LeftMostPosition = leftMost;
-            c.Size = size;
-            leftMost.x += size.x; //TODO: Check if correct ? leftmost should be -= size.x
-            nc.transform.position = leftMost;
+            c.Size = size;          
+            Vector2 pos = new Vector2(leftMost.x + size.x / 2, size.y/2);
+            c.gameObject.transform.position = pos;
             return nc;
         }
 
-        public static IObstacle ObstacleFactory(Vector2 pos, Chunk parent)
+        public static IObstacle ObstacleFactory(Chunk parent, Vector3 pos, Vector2 size)
         {
             GameObject no = new GameObject();
-            IObstacle io = no.AddComponent<Obstacle.Obstacle>(); //Concrete Obstacle Added
+            Obstacle.Obstacle o = no.AddComponent<Obstacle.Obstacle>(); //Concrete Obstacle Added
+            o.gameObject.transform.position = pos;
+            o.gameObject.GetComponent<BoxCollider2D>().size = size; //TODO: Convert to a variable
+            o.CreateSpline();
+            IObstacle io = o;
             io = CreateDecorationForObject(ref io);
-            no.transform.SetParent(parent.gameObject.transform);
-            io.UpdateObstacle();
+            no.transform.SetParent(parent.gameObject.transform);                        
             return io;
         }
 

@@ -11,6 +11,7 @@ namespace Assets.Code.World.Chunks
     class Chunk : MonoBehaviour                                        
 
     {
+        //TODO: Create a density system and adjust the amounts to the chunk sizes.
         public static int maxNumberOfEnemies = 5;
         public static int maxNumberOfObstacles = 20;
 

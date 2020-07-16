@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.XR.WSA.Input;
 
 namespace Assets.Code.World
 {
@@ -29,7 +28,7 @@ namespace Assets.Code.World
         /// The x-axis distance between rightmost chunk position and the subject (usually the player) position.<br></br>
         /// Used while checking when to create chunks
         /// </summary>
-        public float chunkTriggerDistance = 60; 
+        public float chunkTriggerDistance = 20; 
         /// <summary>
         /// The offset for deleting chunks after player moves past them
         /// </summary>
@@ -48,7 +47,7 @@ namespace Assets.Code.World
             if (chunksCreated == 0 || this.currentRightMost == float.NegativeInfinity) //If chunksCreated is 0 or if currentRightMost is negative infinity, then there is no chunk at all
             {
                 //currentRightmost position should be the new chunk's leftmost
-                currentRightMost = player.transform.position.x - activeCamera.orthographicSize;
+                currentRightMost = player.transform.position.x - activeCamera.orthographicSize * activeCamera.aspect; // * aspect is because of unity's orthographicSize is the height value. (This kind of stuff is the reason why i hate unity)
                 return currentRightMost;
             }
             else
@@ -74,14 +73,13 @@ namespace Assets.Code.World
         }
         public Chunk CreateNewChunk()
         {
-           
                 //If there is not enough room in the chunk buffer, no chunk should be created
                 //In theory, this exception should never be thrown since chunks should be deleted after player passes them 
                     //(and the further buffers should be no more than the buffer size)
                 if (activeChunks >= Chunks.Length)
                     throw new Exception("Chunk Buffer Full");
 
-                Chunk chunk = WorldGenerator.GenerateChunk(new Vector2(GetRightmost(), 0));
+                Chunk chunk = WorldGenerator.GenerateChunk(new Vector2(GetRightmost(), 0), activeCamera);
                 activeChunks++;
                 chunksCreated++;
                 for(int i = 0; i<Chunks.Length; i++)
@@ -126,7 +124,6 @@ namespace Assets.Code.World
             {
                 if (Chunks[i] != null)
                 {
-                    Debug.Log("Chunk not null");
                     c = Chunks.ElementAt(i);
                     if (Math.Abs(movementDelta) > 0f)
                     {  

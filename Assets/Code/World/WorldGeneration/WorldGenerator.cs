@@ -19,10 +19,19 @@ namespace Assets.Code.World
         [SerializeField]private const float defaultChunkWidth = 60;
         [SerializeField] private const float defaultChunkHeight = 10;
         [SerializeField] private const int maxPositionIterations = 1000;
-
+        
         public static Chunk GenerateChunk(Vector2 leftMost)
         {
             return GenerateChunk(new Vector2(defaultChunkWidth, defaultChunkHeight), leftMost);
+        }
+        public static Chunk GenerateChunk(Vector2 leftMost, Camera cam)
+        {
+            float width = defaultChunkWidth;
+            if(width < cam.orthographicSize * cam.aspect * 2)
+            {              
+                width = cam.orthographicSize * cam.aspect * 2 + 5;
+            }
+            return GenerateChunk(new Vector2(width, defaultChunkHeight), leftMost);
         }
 
         public static Chunk GenerateChunk(Vector2 size, Vector2 leftMost)
@@ -30,6 +39,7 @@ namespace Assets.Code.World
             GameObject newChunk = ObjectFactory.ChunkFactory(leftMost, size);
             GenerateObstacles(newChunk.GetComponent<Chunk>());
             return newChunk.GetComponent<Chunk>();
+            return null;
         }
 
         private static int GenerateEnemies(Chunk chunk)
@@ -48,14 +58,12 @@ namespace Assets.Code.World
                     KeyValuePair<Vector2, Vector2> valuePair = FindSuitablePosition(chunk);
                     if (!valuePair.Key.Equals(Vector2.negativeInfinity))
                     {
-                        io = ObjectFactory.ObstacleFactory(chunk.transform.position, chunk);
-                        io.GetGameObject().transform.position = valuePair.Key;
-                        io.GetGameObject().GetComponent<BoxCollider2D>().size = valuePair.Value; //TODO: Convert to a variable
+                        io = ObjectFactory.ObstacleFactory(chunk, valuePair.Key, valuePair.Value);
                         curScore += io.Score;
 
                         //If AddObstacle returns false, then it has failed to add it to chunk buffer. 
                         //It cannot be accessed therefore needs to be destroyes
-                        if (!chunk.AddObstacle(io)) 
+                        if (!chunk.AddObstacle(io))
                             GameObject.Destroy(io.GetGameObject()); 
                     }
                     else
@@ -72,26 +80,33 @@ namespace Assets.Code.World
             Vector2 candidatePos = Vector2.zero;
             Vector2 candidateSize = Vector2.zero;
             int iteration = 0;
-            float xmax = c.gameObject.transform.position.x + c.Size.x/2;
+            float xmax = c.gameObject.transform.position.x + c.Size.x / 2;
             float xmin = c.gameObject.transform.position.x - c.Size.x / 2;
 
+            bool isSuitable;
             while (iteration < 1000)
             {
+                isSuitable = true; //Flag needed for continuing or stopping iterations. True when no overlaps exist with the currens candidates.
                 iteration++;
-                candidateSize = new Vector2(UnityEngine.Random.Range(1, 3), UnityEngine.Random.Range(1, 3));//TODO: Attach candidateSize to a variable.
+                candidateSize = new Vector2(UnityEngine.Random.Range(1f, 3f), UnityEngine.Random.Range(1f, 3f));//TODO: Attach candidateSize to a variable.
                 candidatePos = new Vector2(
                     UnityEngine.Random.Range(xmin + candidateSize.x/2, xmax - candidateSize.x/2), //x
                     UnityEngine.Random.Range(0 + candidateSize.y/2, c.Size.y - candidateSize.y/2) //y
                     );
-                foreach (IObstacle obstacle in obstacles) //TODO: First obstacle should be seperely created since all will be null otherwise
+                foreach (IObstacle obstacle in obstacles)
                 {
-                    if ( c.ObstalcesCreated == 0 || (obstacle != null && 
-                        !IsOverlapping(candidateSize, candidatePos, Vector2.zero, obstacle.GetGameObject().transform.position)) )
-                    { //TODO: change Vector 0 with the actual size of this object
-                        return new KeyValuePair<Vector2, Vector2>(candidatePos, candidateSize);
+                    if(obstacle != null)
+                    {
+                        if (IsOverlapping(candidateSize, candidatePos, obstacle.GetGameObject().GetComponent<BoxCollider2D>().size, obstacle.GetGameObject().transform.position)) //TODO: Dont use boxcollider.size, use a seperate variable)
+                        {
+                            //Cant return here since it shouldnt return after just checking the first obstacle
+                            //If there is an overlap with any existing object, break the loop and try another point and size.
+                            isSuitable = false;
+                            break;
+                        }
                     }
-                    
                 }
+                if(isSuitable) return new KeyValuePair<Vector2, Vector2>(candidatePos, candidateSize);
             }
             return new KeyValuePair<Vector2, Vector2>(Vector2.negativeInfinity, Vector2.negativeInfinity);
         }       
@@ -103,30 +118,31 @@ namespace Assets.Code.World
         /// </summary>
         private static bool IsOverlapping(Vector2 size1, Vector2 pos1, Vector2 size2, Vector2 pos2)
         {
+            
             float minX1, maxX1, minY1, maxY1;
             float minX2, maxX2, minY2, maxY2;
 
-            minX1 = pos1.x - size1.x / 2;
-            maxX1 = pos1.x + size1.x / 2;
+            minX1 = pos1.x - size1.x / 2f;
+            maxX1 = pos1.x + size1.x / 2f;
 
-            minX2 = pos2.x - size2.x / 2;
-            maxX2 = pos2.x + size2.x / 2;
+            minX2 = pos2.x - size2.x / 2f;
+            maxX2 = pos2.x + size2.x / 2f;
 
-            minY1 = pos1.y - size1.y / 2;
-            maxY1 = pos1.y + size1.y / 2;
+            minY1 = pos1.y - size1.y / 2f;
+            maxY1 = pos1.y + size1.y / 2f;
 
-            minY2 = pos2.y - size2.y / 2;
-            maxY2 = pos2.y + size2.y / 2;
+            minY2 = pos2.y - size2.y / 2f;
+            maxY2 = pos2.y + size2.y / 2f;
 
             //case 1: one is left of the other
-            if (maxX2 < minX1 || maxX1 < minX2) return false;
+            if (maxX2 < minX1) return false;
             //case 2: one is on top of other
-            if(maxY1 < minY2 || maxY2 < minY1) return false;
+            if(maxY1 < minY2) return false;
             //case 3: one is below other
-            if (maxY2 < minY1 || maxY1 < minY2) return false;
+            if (maxY2 < minY1) return false;
             //case 4: one is right of other
-            if (maxX1 < minX2 || maxX2 < minX1) return false;
-             
+            if (maxX1 < minX2) return false;
+
             return true;
         }
     }

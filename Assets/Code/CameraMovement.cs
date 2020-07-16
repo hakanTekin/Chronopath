@@ -36,7 +36,7 @@ public class CameraMovement : MonoBehaviour
             camera = gameObject.AddComponent<Camera>();
 
         if (camera.orthographic)
-            cameraWidth = camera.orthographicSize;
+            cameraWidth = camera.orthographicSize * camera.aspect; //Camera.ortographicSize is the height value. Width is automatically set in unity's code. So width is equal to aspect * orth.Size
         Camera.SetupCurrent(camera);
     }
 
@@ -59,7 +59,7 @@ public class CameraMovement : MonoBehaviour
             
         }
         //Y axis
-        adjustAmount.y = characterToFollow.transform.position.y - gameObject.transform.position.y;
+        adjustAmount.y = characterToFollow.transform.position.y - gameObject.transform.position.y+2.5f;
 
         //Translate the transform
         gameObject.transform.Translate(adjustAmount);
