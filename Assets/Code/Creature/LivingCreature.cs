@@ -17,22 +17,23 @@ namespace Assets.Code
         private Quaternion currentRotation;
         private Vector2 deltaSpeed;
 
-        private void HandleAnimation()
+        protected virtual void HandleAnimation()
         {
         }
 
-        private void UpdateHealth(float dmg)
-        {
-
-        }
-
-        protected void Attack(float dmg)
+        protected virtual void UpdateHealth(float dmg)
         {
 
         }
 
-        protected bool Die()
+        protected virtual void Attack(float dmg)
         {
+
+        }
+
+        protected virtual bool Death()
+        {
+            Debug.Log("DED");
             return false;
         }
     }

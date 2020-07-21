@@ -27,6 +27,11 @@ namespace Assets.Code.World.Obstacle.Decorator
             return wrappee.GetGameObject();
         }
 
+        public World GetWorld()
+        {
+            return wrappee.GetWorld();
+        }
+
         public virtual void UpdateObstacle()
         {
             wrappee.UpdateObstacle();

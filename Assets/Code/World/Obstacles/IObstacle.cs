@@ -15,5 +15,6 @@ namespace Assets.Code.World.Obstacle
         string GetType();
         void UpdateObstacle();
         GameObject GetGameObject();
+        World GetWorld();
     }
 }

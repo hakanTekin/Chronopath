@@ -72,7 +72,6 @@ namespace Assets.Code.World.Obstacle
             shapeController.RefreshSpriteShape();
             return box;
         }
-
         public void UpdateObstacle()
         {
             Debug.Log("Obstacle Updated");
@@ -81,6 +80,10 @@ namespace Assets.Code.World.Obstacle
         GameObject IObstacle.GetGameObject()
         {
             return this.gameObject;
+        }
+        public World GetWorld()
+        {
+            return FindObjectOfType<World>();
         }
 
         string IObstacle.GetType()

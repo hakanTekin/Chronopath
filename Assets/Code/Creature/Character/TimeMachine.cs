@@ -10,22 +10,36 @@ namespace Assets.Code.Creature.Character
 {
     class TimeMachine
     {
-        private float timeAffectionDelta;
-        float fuel;
+        private int timeAffectionDelta;
+        int fuel;
 
-        TimeMachine(int f = 100, float tad = 1)
+        public TimeMachine(int f = 100, int tad = 1)
         {
-
             this.timeAffectionDelta = tad;
             this.fuel = f;
 
         }
-        public bool ChangeTime(float delta = float.MinValue)
+        public bool ChangeTime(World.World world, int delta = int.MinValue)
         {
+            if (world is null)
+            {
+                throw new ArgumentNullException(nameof(world));
+                return false;
+            }
+
             if (delta == float.MinValue)
                 delta = timeAffectionDelta;
-            //TODO: Change World Time
-            return false;
+            //Ensure an always negative fuelDelta. Since delta can either be negative or positive. But fuelDelta is always supposed to be negative.
+            updateFuel(-1*Math.Abs(delta));
+            world.ChangeWorldTime(delta);
+            
+            return true;
         }
+        public int updateFuel(int fuelDelta)
+        {
+            this.fuel += fuelDelta;
+            return this.fuel;
+        }
+
     }
 }

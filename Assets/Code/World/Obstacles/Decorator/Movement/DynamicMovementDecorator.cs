@@ -7,6 +7,9 @@ using UnityEngine;
 
 namespace Assets.Code.World.Obstacle.Decorator
 {
+    /// <summary>
+    /// A movement type for obstacles. Makes the object move.
+    /// </summary>
     class DynamicMovementDecorator:MovementDecorator
     {
         /// <summary>
@@ -22,6 +25,8 @@ namespace Assets.Code.World.Obstacle.Decorator
         {
             Score = score + base.Score;
         }
+
+
         public string GetType()
         {
             throw new NotImplementedException();

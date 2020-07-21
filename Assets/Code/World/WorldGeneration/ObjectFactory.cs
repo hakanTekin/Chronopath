@@ -1,6 +1,7 @@
 ﻿using Assets.Code.World.Chunks;
 using Assets.Code.World.Obstacle;
 using Assets.Code.World.Obstacle.Decorator;
+using Assets.Code.World.Obstacles.Decorator.Blip;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -42,8 +43,8 @@ namespace Assets.Code.World.WorldGeneration
 
         private static IObstacle CreateDecorationForObject(ref IObstacle concreteObstacle)
         {
-            int movement = UnityEngine.Random.Range(0, 2);
-            int blip = UnityEngine.Random.Range(0, 2);
+            MovementType movement = (MovementType)UnityEngine.Random.Range(0, (int)MovementType.Dynamic + 1);
+            BlipType blip = (BlipType)UnityEngine.Random.Range(0, (int)BlipType.Delayed + 1);
 
 
             /*TODO:
@@ -56,10 +57,23 @@ namespace Assets.Code.World.WorldGeneration
             
             switch (blip)
             {
-                case 0:
-                    break;
-                case 1:
+                case BlipType.Standart:
                     decorated = new BlipDecorator(decorated);
+                    Debug.Log("standart blip");
+                    break;
+
+                case BlipType.Existing:
+                    decorated = new ExistingBlip(decorated);
+                    Debug.Log("existing blip");
+                    break;
+
+                case BlipType.Delayed:
+                    decorated = new DelayedBlip(decorated);
+                    Debug.Log("delayed blip");
+                    break;
+
+                case BlipType.None:
+                    Debug.Log("none blip");
                     break;
                 default:
                     Debug.LogError("Impossbile Blip Decoration Randomized");
@@ -68,12 +82,22 @@ namespace Assets.Code.World.WorldGeneration
 
             switch (movement)
             {
-                case 0: //Static
-                    decorated = new StaticMovementDecorator(decorated);
+                case MovementType.None:
+                    Debug.Log("none movement");
+                    decorated = new MovementDecorator(decorated);
                     break;
-                case 1: //Dynamic
+
+                case MovementType.Static: //Static //TODO: Disabled for now. Find a use 
+                    //decorated = new StaticMovementDecorator(decorated);
+                    Debug.Log("none movement");
+                    decorated = new MovementDecorator(decorated);
+                    break;
+
+                case MovementType.Dynamic: //Dynamic
+                    Debug.Log("Dynamic move");
                     decorated = new DynamicMovementDecorator(decorated, Vector2.zero); //TODO: Change vector.zero to a meaningful path;
                     break;
+
                 default:
                     Debug.LogError("Impossbile Movement Decoration Randomized");
                     break;

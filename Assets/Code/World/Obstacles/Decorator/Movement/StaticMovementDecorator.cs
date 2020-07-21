@@ -8,12 +8,15 @@ using UnityEngine.UIElements;
 
 namespace Assets.Code.World.Obstacle.Decorator
 {
+
+    /// <summary>
+    /// A movement type for obstacles. Does not move
+    /// </summary>
     class StaticMovementDecorator:MovementDecorator
     {
         [SerializeField] private static int score = 50;
         public StaticMovementDecorator(IObstacle w) : base(w)
         {
-            
             Score = score + base.Score;
         }
 

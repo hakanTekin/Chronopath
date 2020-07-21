@@ -1,5 +1,6 @@
 ﻿using Assets.Code.World.Chunks;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,12 +13,14 @@ namespace Assets.Code.World
     class World:MonoBehaviour
     {
         public GameObject player;
-        public float worldTime;
-        public float WorldEndTime = 1000;
+        public int worldTime;
+        public int WorldEndTime = 1000;
 
         public Camera activeCamera;
         private Chunk[] Chunks;
         private int activeChunks = 0;
+
+        [SerializeField] private int worldTimeAdvanceMultiplier = 1;
 
         [SerializeField] private int chunkCount = 5;
         private int chunksCreated = 0;
@@ -40,6 +43,19 @@ namespace Assets.Code.World
             currentRightMost = float.NegativeInfinity;
             Chunks = new Chunk[5];
             CreateNewChunk(); // Create One Chunk
+            StartCoroutine(WorldTimer());
+        }
+
+        IEnumerator WorldTimer()
+        {
+
+            while (true)
+            {
+                yield return new WaitForSeconds(1);
+                Debug.Log("yaya");
+                ChangeWorldTime(worldTimeAdvanceMultiplier);
+            }
+            
         }
 
         private float GetRightmost()
@@ -104,10 +120,10 @@ namespace Assets.Code.World
         }
         public void MoveChunks(float deltaX)
         {
-            UpdateChunks(movementDelta: deltaX );
+            UpdateChunks(movementDelta: deltaX);
         }
 
-        public void ChangeWorldTime(float delta)
+        public void ChangeWorldTime(int delta)
         {
             worldTime += delta;
             if(worldTime == 1000)
@@ -129,12 +145,12 @@ namespace Assets.Code.World
                     {  
                         c.MoveChunk(movementDelta);
                         //If chunk's rightmost position is now behind the player, then it cannot be seen again. Therefore it can be destoyed.
-                        if (c.transform.position.x + c.Size.x / 2 < player.transform.position.x - chunkRemovalPositionOffset)
+                        if (c.transform.position.x + c.Size.x / 2 < player.transform.position.x + chunkRemovalPositionOffset)
                             RemoveUnusedChunks(i);
                     }
                     if(timeDelta != 0f) //Time is being altered. Update chunk blippers
                     {
-                        c.UpdateBlippers(this.worldTime); 
+                        c.UpdateBlippers(); 
                     }
                 }
             }

@@ -3,6 +3,12 @@ using UnityEngine;
 
 namespace Assets.Code.World.Obstacle.Decorator
 {
+    enum MovementType
+    {
+        None = 0,
+        Static = 1,
+        Dynamic = 2
+    }
     class MovementDecorator : ObstacleDecorator
     {
 

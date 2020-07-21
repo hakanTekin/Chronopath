@@ -39,7 +39,6 @@ namespace Assets.Code.World
             GameObject newChunk = ObjectFactory.ChunkFactory(leftMost, size);
             GenerateObstacles(newChunk.GetComponent<Chunk>());
             return newChunk.GetComponent<Chunk>();
-            return null;
         }
 
         private static int GenerateEnemies(Chunk chunk)
@@ -68,7 +67,7 @@ namespace Assets.Code.World
                     }
                     else
                     {
-                        Debug.Log("KVP is negInf");
+                        Debug.LogError("KVP is negInf");
                     }
                 }
             }
@@ -91,7 +90,7 @@ namespace Assets.Code.World
                 candidateSize = new Vector2(UnityEngine.Random.Range(1f, 3f), UnityEngine.Random.Range(1f, 3f));//TODO: Attach candidateSize to a variable.
                 candidatePos = new Vector2(
                     UnityEngine.Random.Range(xmin + candidateSize.x/2, xmax - candidateSize.x/2), //x
-                    UnityEngine.Random.Range(0 + candidateSize.y/2, c.Size.y - candidateSize.y/2) //y
+                    UnityEngine.Random.Range(0 + candidateSize.y/2, 5 - candidateSize.y/2) //y
                     );
                 foreach (IObstacle obstacle in obstacles)
                 {

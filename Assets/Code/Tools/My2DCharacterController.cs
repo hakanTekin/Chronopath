@@ -45,6 +45,10 @@ public class My2DCharacterController : MonoBehaviour
         rigid.bodyType = RigidbodyType2D.Kinematic;
         groundCheckBoxSize = new Vector2(collisionBox.bounds.extents.x, 0.02f);
         World = FindObjectOfType<World>();
+        if(CameraMovement == null)
+        {
+            CameraMovement = FindObjectOfType<Camera>().GetComponent<CameraMovement>();
+        }
     }
 
     void Update()
@@ -81,7 +85,6 @@ public class My2DCharacterController : MonoBehaviour
 
         if (isMovingWorld)
         {
-            Debug.Log(realSpeed.x);
             World.MoveChunks(realSpeed.x * -1 * Time.deltaTime);
         }
 

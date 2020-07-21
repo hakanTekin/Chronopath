@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 6462686813623640376}
   - component: {fileID: 7032548878786140710}
   - component: {fileID: 852961635}
+  - component: {fileID: 852961641}
   m_Layer: 0
   m_Name: PlayerCharacter
   m_TagString: Untagged
@@ -172,12 +173,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collisionBox: {fileID: 7165222286418564580}
   gravity: -25
-  currentSpeed: {x: 0, y: 0}
+  realSpeed: {x: 0, y: 0}
   rigid: {fileID: 6462686813623640376}
   isGrounded: 0
   characterSpeed: 10
   jumpForce: 15
-  Camera: {fileID: 0}
+  CameraMovement: {fileID: 0}
 --- !u!61 &7165222286418564580
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -285,5 +286,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1fe9385543340c446a92ac7ba7a10c29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &852961641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4298940859979595680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1568adbc09ef13d4ca45e3bee737a9a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

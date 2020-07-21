@@ -70,8 +70,11 @@ namespace Assets.Code.World.Chunks
             Destroy(this.gameObject);
             return false;
         }
-        public bool UpdateBlippers(float worldTime)
+        public bool UpdateBlippers()
         {
+            foreach (IObstacle io in obstacles)
+                if (io != null)
+                    io.UpdateObstacle();
             return false;
         }            
 
