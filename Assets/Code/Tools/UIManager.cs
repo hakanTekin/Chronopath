@@ -15,15 +15,16 @@ namespace Assets.Code.Tools
         private GameObject TimerGO, ScoreGO, SliderGO;
         public Text TimerText;
         public Text ScoreText;
-        [SerializeField] Sprite handlSprite;
+
 
         private Character character;
 
         private bool isMenuOpen;
         private static Font TextFont;
+
+        private Joystick joystick;
         private void Start()
         {
-
             character = GetComponentInParent<Character>();
             //Text Elements Setup
             TimerGO = new GameObject("TimerGO");
@@ -44,7 +45,16 @@ namespace Assets.Code.Tools
             ScoreText.text = "basaklarr";
             ScoreText.font = TextFont;
             ScoreText.material = TextFont.material;
+
+            joystick = gameObject.GetComponentInChildren<FixedJoystick>();
         }
+
+        private void Update()
+        {
+            MovementInput(joystick.Direction);
+        }
+
+        
 
         public void UpdateTime(String newTime)
         {
@@ -56,8 +66,13 @@ namespace Assets.Code.Tools
             ScoreText.text = newScore;
         }
 
+        private void MovementInput(Vector2 direction)
+        {
+            MovementInput(direction.x, direction.y);
+        }
         public bool MovementInput(float x, float y)
         {
+            character.Controller.MovementInput(new Vector2(x, y));
             return false;
         }
 

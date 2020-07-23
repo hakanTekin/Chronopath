@@ -17,7 +17,7 @@ namespace Assets.Code.Creature.Character
         protected Timer Timer;
         protected Score Score;
         protected TimeMachine TimeMachine;
-        protected My2DCharacterController Controller;
+        public My2DCharacterController Controller;
         private CharacterInputs inputController;
 
         private Coroutine increaseTimerCoroutine, decreaseTimerCoroutine;
@@ -39,12 +39,20 @@ namespace Assets.Code.Creature.Character
             inputController.TimeMachine.DecreaseTime.canceled += (obj) => { decreaseCR_Switch = false; world.TimerStartStopState(true); };
             inputController.TimeMachine.IncreaseTime.canceled += (obj) => { increaseCR_Switch = false; world.TimerStartStopState(true); };
         }
-
+        /// <summary>
+        /// <br>Starts coroutine for increasing world time.</br>
+        /// <br>For timeMachine usage. Automatic world time step has its own coroutine</br>
+        /// </summary>
+        /// <param name="obj"></param>
         public void StartIncreaseCR(InputAction.CallbackContext obj){
             world.TimerStartStopState(false);
             decreaseTimerCoroutine = StartCoroutine(DecreaseTime());
             
         }
+        /// <summary>
+        /// Starts coroutine for decreasing world time
+        /// </summary>
+        /// <param name="obj"></param>
         public void StartDecreaseCR(InputAction.CallbackContext obj) {
             world.TimerStartStopState(false); 
             increaseTimerCoroutine = StartCoroutine(IncreaseTime());
@@ -80,7 +88,10 @@ namespace Assets.Code.Creature.Character
             }
             decreaseCR_Switch = true;
         }
-
+        /// <summary>
+        /// <br>Starts coroutines accordingly when timeMachine slider recieves input</br>
+        /// </summary>
+        /// <param name="x"> time machine input value</param>
         public void TimeMachineSliderInput(int x)
         {
             if (x == 0)

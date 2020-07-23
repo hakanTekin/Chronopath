@@ -53,14 +53,29 @@ public class My2DCharacterController : MonoBehaviour
 
     void Update()
     {
-        //Handling input
-        realSpeed.x = Input.GetAxis("Horizontal") * characterSpeed;
-        worldSpeed.x = realSpeed.x;
-
-        isMovingWorld = realSpeed.x > 0f && (CameraMovement != null) && CameraMovement.isInMaxLimit();
-       
         if (Input.GetButtonDown("Jump") && isGrounded)
             Jump(jumpForce);
+    }
+
+    public void MovementInput(Vector2 dir)
+    {
+        //Handling input
+        if (dir.magnitude > 0) //If there is any input given that is not zero
+        {
+            if (dir.x > 0.5) realSpeed.x = characterSpeed;
+            else if (dir.x < -0.5) realSpeed.x = -1 * characterSpeed;
+            else realSpeed.x = 0;
+            if (dir.y > 0.5 && isGrounded) Jump(jumpForce);
+            worldSpeed = realSpeed;
+        }
+        else //if dir is zero, maybe a keyboard button is pressed
+        {
+            realSpeed.x = Input.GetAxis("Horizontal") * characterSpeed;
+            worldSpeed.x = realSpeed.x;
+        }
+        
+        isMovingWorld = realSpeed.x > 0f && (CameraMovement != null) && CameraMovement.isInMaxLimit();
+
     }
 
     void FixedUpdate()
@@ -80,12 +95,11 @@ public class My2DCharacterController : MonoBehaviour
         ApplyReactionSpeedToCollisions();
 
         worldSpeed = realSpeed;
-        if (isMovingWorld) //If player tries to move forward but is in the camera follow limit, then move the entire world to back      
-            worldSpeed.x = 0;
 
         if (isMovingWorld)
         {
-            World.MoveChunks(realSpeed.x * -1 * Time.deltaTime);
+                worldSpeed.x = 0;
+                World.MoveChunks(realSpeed.x * -1 * Time.deltaTime);
         }
 
         MoveTo(worldSpeed);
@@ -94,8 +108,8 @@ public class My2DCharacterController : MonoBehaviour
 
 
     /// <summary>
-    ///Iterates through all the active collisions and disables movement in that direction by applying a counter speed
-    ///This is similar to a 'reaction force' in concept
+    ///<br>Iterates through all the active collisions and disables movement in that direction by applying a counter speed</br>
+    ///<br>This is the 'reaction force' in real world physics</br>
     /// </summary>
     void ApplyReactionSpeedToCollisions()
     {
@@ -139,9 +153,13 @@ public class My2DCharacterController : MonoBehaviour
     /// <param name="jumpForce"></param>
     internal void Jump(float jumpForce)
     {
-        isGrounded = false;
-        realSpeed += new Vector2(0, jumpForce);
-        worldSpeed += new Vector2(0, jumpForce);
+        if (IsGrounded()) {
+            Debug.Log("jumping");
+            isGrounded = false;
+            realSpeed += new Vector2(0, jumpForce);
+            worldSpeed += new Vector2(0, jumpForce);
+        }
+        
     }
 
     private void OnCollisionExit2D(Collision2D collision)
