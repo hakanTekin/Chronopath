@@ -66,7 +66,7 @@ namespace Assets.Code.Tools
             ScoreText.text = newScore;
         }
 
-        private void MovementInput(Vector2 direction)
+        public void MovementInput(Vector2 direction)
         {
             MovementInput(direction.x, direction.y);
         }
@@ -78,22 +78,24 @@ namespace Assets.Code.Tools
 
         public bool TimeMachineInput(int x)
         {
-            character.TimeMachineSliderInput(x);
+            if(!isMenuOpen)
+                character.TimeMachineSliderInput(x);
             return false;
         }
-        public bool Menu()
+        public void Menu()
         {
             if (isMenuOpen)
             {
                 isMenuOpen = false;
+                Time.timeScale = 1;
                 //Close menu
             }
             else
             {
                 isMenuOpen = true;
                 //Open menu
+                Time.timeScale = 0;
             }
-            return isMenuOpen;
         }
     }
 }

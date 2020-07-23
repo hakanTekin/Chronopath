@@ -66,6 +66,7 @@ public class My2DCharacterController : MonoBehaviour
             else if (dir.x < -0.5) realSpeed.x = -1 * characterSpeed;
             else realSpeed.x = 0;
             if (dir.y > 0.5 && isGrounded) Jump(jumpForce);
+
             worldSpeed = realSpeed;
         }
         else //if dir is zero, maybe a keyboard button is pressed
@@ -156,6 +157,7 @@ public class My2DCharacterController : MonoBehaviour
         if (IsGrounded()) {
             Debug.Log("jumping");
             isGrounded = false;
+            if(!(realSpeed.y > 1))
             realSpeed += new Vector2(0, jumpForce);
             worldSpeed += new Vector2(0, jumpForce);
         }

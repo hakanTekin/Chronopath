@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
@@ -96,10 +97,16 @@ namespace Assets.Code.Creature.Character
         {
             if (x == 0)
             {
-                if(decreaseTimerCoroutine != null)
+                if (decreaseTimerCoroutine != null) {
                     StopCoroutine(decreaseTimerCoroutine);
-                if (increaseTimerCoroutine != null)
+                    decreaseTimerCoroutine = null;
+                }
+
+                if (increaseTimerCoroutine != null) {
                     StopCoroutine(increaseTimerCoroutine);
+                    increaseTimerCoroutine = null;
+                }
+               
                 world.TimerStartStopState(true);
             }
             else if (x > 0)
@@ -119,6 +126,7 @@ namespace Assets.Code.Creature.Character
 
         private void OnEnable()
         {
+            Assert.IsNotNull(inputController);
             inputController.Enable();
         }
 
