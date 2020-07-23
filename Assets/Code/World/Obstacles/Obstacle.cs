@@ -74,7 +74,7 @@ namespace Assets.Code.World.Obstacle
         }
         public void UpdateObstacle()
         {
-            Debug.Log("Obstacle Updated");
+            
         }
 
         GameObject IObstacle.GetGameObject()

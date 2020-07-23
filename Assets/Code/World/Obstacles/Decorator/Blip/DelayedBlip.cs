@@ -33,7 +33,7 @@ namespace Assets.Code.World.Obstacles.Decorator.Blip
 
         public override void UpdateObstacle()
         {
-            Debug.Log("Delayed Blip");
+
             wrappee.UpdateObstacle();
         }
     }

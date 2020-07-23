@@ -1,0 +1,80 @@
+{
+    "name": "CharacterInputs",
+    "maps": [
+        {
+            "name": "TimeMachine",
+            "id": "d849858d-21b2-49b8-8033-d7991ea86aa0",
+            "actions": [
+                {
+                    "name": "IncreaseTime",
+                    "type": "Button",
+                    "id": "34c4cdde-f830-439d-b82e-a0e0f723108a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "DecreaseTime",
+                    "type": "Value",
+                    "id": "3ac98792-385e-4402-82ab-66efb6e5ba07",
+                    "expectedControlType": "Integer",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a7697a52-7b1a-49fc-8490-8b57499d1be5",
+                    "path": "<Keyboard>/#(E)",
+                    "interactions": "Hold(duration=0.1)",
+                    "processors": "",
+                    "groups": "Keyboard Mouse",
+                    "action": "IncreaseTime",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "50fceb93-2b47-4581-a08f-dbe472ed7c5a",
+                    "path": "<Keyboard>/#(Q)",
+                    "interactions": "Hold(duration=0.1)",
+                    "processors": "",
+                    "groups": "Keyboard Mouse",
+                    "action": "DecreaseTime",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Keyboard Mouse",
+            "bindingGroup": "Keyboard Mouse",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": true,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": true,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "Touchscreen",
+            "bindingGroup": "Touchscreen",
+            "devices": [
+                {
+                    "devicePath": "<Touchscreen>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}

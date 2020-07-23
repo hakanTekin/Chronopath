@@ -35,7 +35,7 @@ namespace Assets.Code.World.Obstacle.Decorator
         public override void UpdateObstacle()
         {
             wrappee.UpdateObstacle();
-            Debug.Log("Dyanmic Updated");
+
         }
     }
 }

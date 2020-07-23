@@ -43,7 +43,7 @@ namespace Assets.Code.World.Obstacles.Decorator.Blip
             if (world != null)
                 wet = world.WorldEndTime;
 
-            Debug.Log("ExistingBlip");
+
             if(existanceStart > wet) //Object does not yet exists
             {
                 this.GetGameObject().SetActive(false);

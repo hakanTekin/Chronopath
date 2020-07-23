@@ -59,21 +59,19 @@ namespace Assets.Code.World.WorldGeneration
             {
                 case BlipType.Standart:
                     decorated = new BlipDecorator(decorated);
-                    Debug.Log("standart blip");
                     break;
 
                 case BlipType.Existing:
                     decorated = new ExistingBlip(decorated);
-                    Debug.Log("existing blip");
+
                     break;
 
                 case BlipType.Delayed:
                     decorated = new DelayedBlip(decorated);
-                    Debug.Log("delayed blip");
+
                     break;
 
                 case BlipType.None:
-                    Debug.Log("none blip");
                     break;
                 default:
                     Debug.LogError("Impossbile Blip Decoration Randomized");
@@ -83,18 +81,18 @@ namespace Assets.Code.World.WorldGeneration
             switch (movement)
             {
                 case MovementType.None:
-                    Debug.Log("none movement");
+
                     decorated = new MovementDecorator(decorated);
                     break;
 
                 case MovementType.Static: //Static //TODO: Disabled for now. Find a use 
                     //decorated = new StaticMovementDecorator(decorated);
-                    Debug.Log("none movement");
+
                     decorated = new MovementDecorator(decorated);
                     break;
 
                 case MovementType.Dynamic: //Dynamic
-                    Debug.Log("Dynamic move");
+
                     decorated = new DynamicMovementDecorator(decorated, Vector2.zero); //TODO: Change vector.zero to a meaningful path;
                     break;
 

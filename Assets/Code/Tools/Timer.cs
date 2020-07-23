@@ -34,7 +34,7 @@ namespace Assets.Code.Tools
         {
             while (true)
             {
-                UpdateTimeUI();
+                
                 yield return new WaitForSeconds(1);
                 Seconds++;
                 if(Seconds >= 60)

@@ -60,7 +60,7 @@ namespace Assets.Code.World.Obstacle.Decorator
         public override void UpdateObstacle()
         {   
             wrappee.UpdateObstacle();
-            Debug.Log("BlipDecoratorUpdate");
+
             int result = ((int)(world.worldTime / blipInterval) % 2);
             if (result == 1)//hide
             {

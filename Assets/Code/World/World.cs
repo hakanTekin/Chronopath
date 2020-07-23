@@ -1,4 +1,5 @@
-﻿using Assets.Code.World.Chunks;
+﻿using Assets.Code.Tools;
+using Assets.Code.World.Chunks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -35,27 +36,43 @@ namespace Assets.Code.World
         /// <summary>
         /// The offset for deleting chunks after player moves past them
         /// </summary>
-        private float chunkRemovalPositionOffset = 15; 
+        private float chunkRemovalPositionOffset = 15;
 
+        private Coroutine timerCoroutine;
         public void Awake()
         {
             activeCamera = FindObjectOfType<Camera>();
             currentRightMost = float.NegativeInfinity;
             Chunks = new Chunk[5];
             CreateNewChunk(); // Create One Chunk
-            StartCoroutine(WorldTimer());
+            timerCoroutine = StartCoroutine(WorldTimer());
         }
 
+        public bool TimerStartStopState(bool shouldActivate)
+        {
+            if (shouldActivate)
+            {
+                timerCoroutine = StartCoroutine(WorldTimer());
+                return true;
+            }
+            else if (timerCoroutine != null)
+            {
+                StopCoroutine(timerCoroutine);
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool worldTimerCR_isActive = true;
         IEnumerator WorldTimer()
         {
-
-            while (true)
+            while (worldTimerCR_isActive)
             {
                 yield return new WaitForSeconds(1);
-                Debug.Log("yaya");
-                ChangeWorldTime(worldTimeAdvanceMultiplier);
+                ChangeWorldTime(worldTimeAdvanceMultiplier * 1);
             }
-            
+            worldTimerCR_isActive = true;
         }
 
         private float GetRightmost()
@@ -123,14 +140,21 @@ namespace Assets.Code.World
             UpdateChunks(movementDelta: deltaX);
         }
 
-        public void ChangeWorldTime(int delta)
+        public bool ChangeWorldTime(int delta, bool isTimeMachineInput = false)
         {
-            worldTime += delta;
-            if(worldTime == 1000)
+            //If player tries to alter time but goes beyond world limits, dont change time.
+            if (isTimeMachineInput)
+                worldTime += ((worldTime + delta > WorldEndTime) || (worldTime + delta < 0)) ? 0 : delta;
+            else //If world time progresses naturally just add delta
+                worldTime += delta;
+
+            if (worldTime > 1000)
             {
                 EndGame();
+                return false;
             }
             UpdateChunks(timeDelta:delta);
+            return true;
         }
 
         private int UpdateChunks(float timeDelta = 0, float movementDelta = 0)

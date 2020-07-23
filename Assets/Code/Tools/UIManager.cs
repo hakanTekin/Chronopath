@@ -1,42 +1,49 @@
-﻿using System;
+﻿using Assets.Code.Creature.Character;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.UI;
 
 namespace Assets.Code.Tools
 {
     class UIManager : MonoBehaviour
     {
-        private GameObject TimerGO, ScoreGO;
+        private GameObject TimerGO, ScoreGO, SliderGO;
         public Text TimerText;
         public Text ScoreText;
+        [SerializeField] Sprite handlSprite;
+
+        private Character character;
 
         private bool isMenuOpen;
         private static Font TextFont;
         private void Start()
         {
+
+            character = GetComponentInParent<Character>();
+            //Text Elements Setup
             TimerGO = new GameObject("TimerGO");
             ScoreGO = new GameObject("ScoreGO");
+            
             TextFont = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
 
-            TimerGO.transform.parent = gameObject.transform;
+            TimerGO.transform.SetParent(gameObject.transform);
 
             TimerText = TimerGO.AddComponent<Text>();
             TimerText.text = "yaraklarr";
             TimerText.font = TextFont;
             TimerText.material = TextFont.material;
-            
 
-            ScoreGO.transform.parent = gameObject.transform;
+            ScoreGO.transform.SetParent(gameObject.transform);
 
             ScoreText = ScoreGO.AddComponent<Text>();
             ScoreText.text = "basaklarr";
             ScoreText.font = TextFont;
             ScoreText.material = TextFont.material;
-            
         }
 
         public void UpdateTime(String newTime)
@@ -54,8 +61,9 @@ namespace Assets.Code.Tools
             return false;
         }
 
-        public bool TimeMachineInput(float x)
+        public bool TimeMachineInput(int x)
         {
+            character.TimeMachineSliderInput(x);
             return false;
         }
         public bool Menu()
