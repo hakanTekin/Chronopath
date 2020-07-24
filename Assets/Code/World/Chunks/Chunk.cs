@@ -13,7 +13,7 @@ namespace Assets.Code.World.Chunks
     {
         //TODO: Create a density system and adjust the amounts to the chunk sizes.
         public static int maxNumberOfEnemies = 5;
-        public static int maxNumberOfObstacles = 20;
+        public static int maxNumberOfObstacles = 40;
 
         private Enemy[] enemies;
         private IObstacle[] obstacles;
@@ -29,7 +29,7 @@ namespace Assets.Code.World.Chunks
         /// The maximum allowed number of points chunk can contain.<br></br>Each enemy and obstacle has its objectScore and they are summed in the chunk they are in
         /// </summary>
         private int maxObjectScore;
-        public int MaxObjectScore { get => maxObjectScore; }
+        public int MaxObjectScore { get => maxObjectScore; set => maxObjectScore = value; }
         public Vector2 Size { get => size; set => size = value; }
        
         /*
@@ -48,7 +48,7 @@ namespace Assets.Code.World.Chunks
         {
             enemies = new Enemy[maxNumberOfEnemies];
             obstacles = new IObstacle[maxNumberOfObstacles];
-            maxObjectScore = 1000;
+            MaxObjectScore = 1000;
         }
         public bool MoveChunk(float delta)
         {

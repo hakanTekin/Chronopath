@@ -17,7 +17,7 @@ namespace Assets.Code.World
     static class WorldGenerator
     {
         [SerializeField]private const float defaultChunkWidth = 60;
-        [SerializeField] private const float defaultChunkHeight = 10;
+        [SerializeField] private const float defaultChunkHeight = 7;
         [SerializeField] private const int maxPositionIterations = 1000;
         
         public static Chunk GenerateChunk(Vector2 leftMost)
@@ -79,8 +79,11 @@ namespace Assets.Code.World
             Vector2 candidatePos = Vector2.zero;
             Vector2 candidateSize = Vector2.zero;
             int iteration = 0;
-            float xmax = c.gameObject.transform.position.x + c.Size.x / 2;
-            float xmin = c.gameObject.transform.position.x - c.Size.x / 2;
+            float xmax = c.gameObject.transform.position.x + (c.Size.x / 2);
+            float xmin = c.gameObject.transform.position.x - (c.Size.x / 2);
+
+            float ymax = c.gameObject.transform.position.y + (c.Size.y / 2);
+            float ymin = c.gameObject.transform.position.y - (c.Size.y / 2);
 
             bool isSuitable;
             while (iteration < 1000)
@@ -90,7 +93,7 @@ namespace Assets.Code.World
                 candidateSize = new Vector2(UnityEngine.Random.Range(1f, 3f), UnityEngine.Random.Range(1f, 3f));//TODO: Attach candidateSize to a variable.
                 candidatePos = new Vector2(
                     UnityEngine.Random.Range(xmin + candidateSize.x/2, xmax - candidateSize.x/2), //x
-                    UnityEngine.Random.Range(0 + candidateSize.y/2, 5 - candidateSize.y/2) //y
+                    UnityEngine.Random.Range(ymin - candidateSize.y/2, ymax - candidateSize.y/2) //y
                     );
                 foreach (IObstacle obstacle in obstacles)
                 {

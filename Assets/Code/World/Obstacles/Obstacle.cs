@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,27 +18,27 @@ namespace Assets.Code.World.Obstacle
         Vector2 size;
         BoxCollider2D collider;
         private int score = 0;
-
-        private SpriteShapeController shapeController;
-        private SpriteShapeRenderer shapeRenderer;
-        
+        private SpriteRenderer renderer;
+        [SerializeField] private Sprite sprite;
         public int Score { get => score; set => score = value; }
 
         private void Awake()
         {
+            sprite = Resources.Load<Sprite>("HandPainted Lava Textures/Textures/03");
             collider = gameObject.AddComponent<BoxCollider2D>();
             collider.size = new Vector2(2,2); //TODO: Why?
             collider.offset = Vector2.zero;
-            shapeRenderer = gameObject.AddComponent<SpriteShapeRenderer>();
-            shapeController = gameObject.AddComponent<SpriteShapeController>();
+            renderer = gameObject.AddComponent<SpriteRenderer>();
             shape = Resources.Load<SpriteShape>("ObstacleShapeProfile");
-            shapeController.spriteShape = shape;
+            renderer.sprite = sprite;
+            renderer.drawMode = SpriteDrawMode.Tiled;
+            renderer.tileMode = SpriteTileMode.Continuous;
         }
 
         public Spline CreateSpline()
         {
-            Spline box = shapeController.spline;
-            
+            //Spline box = shapeController.spline;
+            renderer.size = collider.size;
             Vector3 lt, rt, lb, rb; //left-top, right-top, left-bottom, right-bottom;
             lt = new Vector3(
                 -1 * (collider.size.x / 2),
@@ -63,18 +64,18 @@ namespace Assets.Code.World.Obstacle
                 gameObject.transform.position.z
                 );
 
-            box.InsertPointAt(0, lt);
-            box.InsertPointAt(1, rt);
-            box.InsertPointAt(2, rb);
-            box.InsertPointAt(3, lb);
+            // box.InsertPointAt(0, lt);
+            // box.InsertPointAt(1, rt);
+            // box.InsertPointAt(2, rb);
+            // box.InsertPointAt(3, lb);
 
-            shapeController.splineDetail = 1;
-            shapeController.RefreshSpriteShape();
-            return box;
+            //shapeController.splineDetail = 1;
+            //shapeController.RefreshSpriteShape();
+            //return box;
+            return null;
         }
         public void UpdateObstacle()
         {
-            
         }
 
         GameObject IObstacle.GetGameObject()
@@ -89,6 +90,12 @@ namespace Assets.Code.World.Obstacle
         string IObstacle.GetType()
         {
             throw new NotImplementedException();
+        }
+
+        bool AssignCoroutine(IEnumerator coroutine)
+        {
+            StartCoroutine(coroutine);
+            return true;
         }
     }
 }

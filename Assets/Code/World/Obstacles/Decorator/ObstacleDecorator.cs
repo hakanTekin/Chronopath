@@ -15,7 +15,6 @@ namespace Assets.Code.World.Obstacle.Decorator
 
         public ObstacleDecorator(IObstacle w)
         {
-            
             this.wrappee = w;
             Score += w.Score;
         }

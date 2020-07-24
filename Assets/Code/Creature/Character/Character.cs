@@ -17,12 +17,27 @@ namespace Assets.Code.Creature.Character
         private World.World world;
         protected Timer Timer;
         protected Score Score;
+        /// <summary>
+        /// Time Machine of the Player
+        /// </summary>
         protected TimeMachine TimeMachine;
+        /// <summary>
+        /// Character physics handler
+        /// </summary>
         public My2DCharacterController Controller;
+        /// <summary>
+        /// Inputs from new input system
+        /// </summary>
         private CharacterInputs inputController;
-
+        /// <summary>
+        /// When slider is held, in what interval should world time change.
+        /// </summary>
+        [SerializeField] private float timeMachineInputRepeatInterval = 0.3f;
+        /// <summary>
+        /// Coroutines used when player tries to change world time via slider
+        /// </summary>
         private Coroutine increaseTimerCoroutine, decreaseTimerCoroutine;
-
+        
         private int currentTimeMachineInput = 0;
 
         private void Awake()
@@ -72,7 +87,7 @@ namespace Assets.Code.Creature.Character
         private IEnumerator IncreaseTime(){
             while (increaseCR_Switch) {
                 TimeMachine.ChangeTime(world,true, currentTimeMachineInput);
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(0.2f);
             }
             increaseCR_Switch = true;
         }
@@ -85,7 +100,7 @@ namespace Assets.Code.Creature.Character
         {
             while (decreaseCR_Switch) {
                 TimeMachine.ChangeTime(world, false, currentTimeMachineInput);
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(0.2f);
             }
             decreaseCR_Switch = true;
         }

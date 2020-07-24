@@ -14,7 +14,6 @@ namespace Assets.Code.Creature.Character
         private int timeAffectionDelta;
         int fuel;
 
-
         public TimeMachine(int f = 100, int tad = 2)
         {
             this.timeAffectionDelta = tad;
@@ -27,13 +26,12 @@ namespace Assets.Code.Creature.Character
             if (world is null)
             {
                 throw new ArgumentNullException(nameof(world));
-                return false;
             } 
             
             delta *= timeAffectionDelta;
             delta *= isIncrease ? 1 : -1;
 
-            world.ChangeWorldTime(delta);
+            world.ChangeWorldTime(delta, true);
             updateFuel(-1 * Math.Abs(delta));//Ensures an always negative fuelDelta. Since delta can either be negative or positive. But fuelDelta is always supposed to be negative.
 
             return true;

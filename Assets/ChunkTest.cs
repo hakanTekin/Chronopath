@@ -14,7 +14,7 @@ public class ChunkTest : MonoBehaviour
     {
         IObstacle io = gameObject.GetComponentInChildren<Obstacle>();
         c = gameObject.GetComponent<Chunk>();
-        c.AddObstacle(new DynamicMovementDecorator(new ExistingBlip(io), Vector2.zero));
+        c.AddObstacle(new DynamicMovementDecorator(new ExistingBlip(io), Vector2.zero, 7f));
     }
     private void FixedUpdate()
     {

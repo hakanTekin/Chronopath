@@ -79,6 +79,7 @@
     <Compile Include="Assets\Code\Tools\Timer.cs" />
     <Compile Include="Assets\Code\Tools\UIManager.cs" />
     <Compile Include="Assets\Code\World\Chunks\Chunk.cs" />
+    <Compile Include="Assets\Code\World\Environment and Decoration\BackgroundScript.cs" />
     <Compile Include="Assets\Code\World\Obstacles\Decorator\Blip\BlipDecorator.cs" />
     <Compile Include="Assets\Code\World\Obstacles\Decorator\Blip\DelayedBlip.cs" />
     <Compile Include="Assets\Code\World\Obstacles\Decorator\Blip\ExistingBlip.cs" />
@@ -92,6 +93,16 @@
     <Compile Include="Assets\Code\World\WorldGeneration\ObjectFactory.cs" />
     <Compile Include="Assets\Code\World\WorldGeneration\WorldGenerator.cs" />
     <Compile Include="Assets\Input\CharacterInputs.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_New.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_RandomDir.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_RotateCamera.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_Translate.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX\Scripts\CFX_AutoDestructShuriken.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX\Scripts\CFX_AutoRotate.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX\Scripts\CFX_LightFlicker.cs" />
+    <Compile Include="Assets\JMO Assets\Cartoon FX\Scripts\CFX_LightIntensityFade.cs" />
     <Compile Include="Assets\Joystick Pack\Examples\JoystickPlayerExample.cs" />
     <Compile Include="Assets\Joystick Pack\Examples\JoystickSetterExample.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Base\Joystick.cs" />
@@ -100,6 +111,11 @@
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
     <Compile Include="Assets\ObjectSpawnTest.cs" />
+    <None Include="Assets\JMO Assets\Cartoon FX\Shaders\CFX3 Multiply Color.shader" />
+    <None Include="Assets\JMO Assets\Cartoon FX\CartoonFX Free.txt" />
+    <None Include="Assets\JMO Assets\Cartoon FX Easy Editor\CartoonFX Easy Editor Readme.txt" />
+    <None Include="Assets\JMO Assets\Cartoon FX\Shaders\CFXM_MobileParticleAdd_Alpha8.shader" />
+    <None Include="Assets\Resources\HandPainted Lava Textures\Documentation\Documentation.txt" />
     <Reference Include="UnityEngine">
       <HintPath>D:/UnityEditors/2019.4.1f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

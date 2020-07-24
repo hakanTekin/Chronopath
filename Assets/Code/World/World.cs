@@ -69,7 +69,7 @@ namespace Assets.Code.World
         {
             while (worldTimerCR_isActive)
             {
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(1f);
                 ChangeWorldTime(worldTimeAdvanceMultiplier * 1);
             }
             worldTimerCR_isActive = true;

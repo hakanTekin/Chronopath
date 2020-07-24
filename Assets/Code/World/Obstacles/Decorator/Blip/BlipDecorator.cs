@@ -40,8 +40,6 @@ namespace Assets.Code.World.Obstacle.Decorator
             world = w.GetWorld();
             Score = score + base.Score;
             ConfigureBlip();
-            renderer = w.GetGameObject().GetComponent<SpriteShapeRenderer>();
-            renderer.color = Color.black;
             collider = this.GetGameObject().GetComponent<BoxCollider2D>();
         }
 
@@ -84,7 +82,7 @@ namespace Assets.Code.World.Obstacle.Decorator
             collider.OverlapCollider(new ContactFilter2D(), results);
             foreach(Collider2D c in results)
             {
-                if(c !=null)
+                if (c != null && c.gameObject.CompareTag("Player"))
                     c.gameObject.SendMessage("Death");
             }
         }

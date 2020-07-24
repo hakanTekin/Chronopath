@@ -25,6 +25,7 @@ namespace Assets.Code.World.WorldGeneration
             c.Size = size;          
             Vector2 pos = new Vector2(leftMost.x + size.x / 2, size.y/2);
             c.gameObject.transform.position = pos;
+            c.MaxObjectScore = c.Id/2 * 100 + c.MaxObjectScore; //MaxObject Score is set to base amount in chunk awake() method. Then for each 2 chunks, adittional 100 points is allocated for new chunks.
             return nc;
         }
 
@@ -35,7 +36,9 @@ namespace Assets.Code.World.WorldGeneration
             o.gameObject.transform.position = pos;
             o.gameObject.GetComponent<BoxCollider2D>().size = size; //TODO: Convert to a variable
             o.CreateSpline();
+
             IObstacle io = o;
+
             io = CreateDecorationForObject(ref io);
             no.transform.SetParent(parent.gameObject.transform);                        
             return io;
@@ -93,7 +96,7 @@ namespace Assets.Code.World.WorldGeneration
 
                 case MovementType.Dynamic: //Dynamic
 
-                    decorated = new DynamicMovementDecorator(decorated, Vector2.zero); //TODO: Change vector.zero to a meaningful path;
+                    decorated = new DynamicMovementDecorator(decorated, new Vector2(4,4), 7f); //TODO: Change vector.zero to a meaningful path;
                     break;
 
                 default:

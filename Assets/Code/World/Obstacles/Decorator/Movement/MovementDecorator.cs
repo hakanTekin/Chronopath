@@ -15,7 +15,8 @@ namespace Assets.Code.World.Obstacle.Decorator
         public MovementDecorator(IObstacle w) : base(w)
         {
             Score = score + base.Score;
-          
+            this.GetGameObject().GetComponent<SpriteRenderer>().color = Color.white;
+
         }
 
         public string GetType()
