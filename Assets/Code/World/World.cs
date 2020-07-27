@@ -156,7 +156,12 @@ namespace Assets.Code.World
             UpdateChunks(timeDelta:delta);
             return true;
         }
-
+        /// <summary>
+        /// <br>When a movement occurs, this method is called by the MovementController class</br>
+        /// </summary>
+        /// <param name="timeDelta"></param>
+        /// <param name="movementDelta"></param>
+        /// <returns></returns>
         private int UpdateChunks(float timeDelta = 0, float movementDelta = 0)
         {
             Chunk c;
@@ -179,10 +184,12 @@ namespace Assets.Code.World
                 }
             }
             GetRightmost();
+            //Check if there is need for new chunks
             if(currentRightMost < player.transform.position.x + chunkTriggerDistance) //Player nears the end of a chunk. Need to create a new chunk
             {
                 CreateNewChunk();
             }
+
             return 0;
         }
 

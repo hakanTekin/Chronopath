@@ -80,6 +80,7 @@
     <Compile Include="Assets\Code\Tools\UIManager.cs" />
     <Compile Include="Assets\Code\World\Chunks\Chunk.cs" />
     <Compile Include="Assets\Code\World\Environment and Decoration\BackgroundScript.cs" />
+    <Compile Include="Assets\Code\World\Ground.cs" />
     <Compile Include="Assets\Code\World\Obstacles\Decorator\Blip\BlipDecorator.cs" />
     <Compile Include="Assets\Code\World\Obstacles\Decorator\Blip\DelayedBlip.cs" />
     <Compile Include="Assets\Code\World\Obstacles\Decorator\Blip\ExistingBlip.cs" />

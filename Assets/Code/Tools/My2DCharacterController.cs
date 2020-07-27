@@ -94,19 +94,15 @@ public class My2DCharacterController : MonoBehaviour
 
         //Change where the character is looking according to its speed
         ApplyReactionSpeedToCollisions();
-
         worldSpeed = realSpeed;
-
         if (isMovingWorld)
         {
-                worldSpeed.x = 0;
-                World.MoveChunks(realSpeed.x * -1 * Time.deltaTime);
+            worldSpeed.x = 0;
+            World.MoveChunks(realSpeed.x * -1 * Time.deltaTime);
         }
-
         MoveTo(worldSpeed);
 
     }
-
 
     /// <summary>
     ///<br>Iterates through all the active collisions and disables movement in that direction by applying a counter speed</br>

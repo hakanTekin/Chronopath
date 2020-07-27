@@ -1,4 +1,5 @@
-﻿using Assets.Code.World.Chunks;
+﻿
+using Assets.Code.World.Chunks;
 using Assets.Code.World.Obstacle;
 using Assets.Code.World.Obstacle.Decorator;
 using Assets.Code.World.WorldGeneration;
@@ -38,9 +39,20 @@ namespace Assets.Code.World
         {
             GameObject newChunk = ObjectFactory.ChunkFactory(leftMost, size);
             GenerateObstacles(newChunk.GetComponent<Chunk>());
+            GenerateGround(newChunk.GetComponent<Chunk>());
             return newChunk.GetComponent<Chunk>();
         }
-
+        private static int GenerateGround(Chunk chunk)
+        {
+            Vector2 groundSize;
+            groundSize.y = chunk.Size.y * 0.1f; //One Tenth of the chunk (vertically) is ground
+            groundSize.x = chunk.Size.x;
+            Vector2 pos = chunk.gameObject.transform.position;
+            pos.y -= (chunk.Size.y / 2 + groundSize.y);
+            Ground g = ObjectFactory.CreateGround(pos, groundSize);
+            g.transform.SetParent(chunk.transform);
+            return 0;
+        }
         private static int GenerateEnemies(Chunk chunk)
         {
             return 0;

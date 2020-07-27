@@ -105,5 +105,26 @@ namespace Assets.Code.World.WorldGeneration
             }
             return decorated;
         }
+        public static Ground CreateGround(Vector2 pos, Vector2? size = null)
+        {
+            GameObject go = new GameObject("Ground");
+
+            Vector2 sizeToPut = size == null ? new Vector2(400, 10) : size.Value;
+
+            go.transform.position = pos;
+            go.AddComponent<BoxCollider2D>().size = sizeToPut;
+            
+            Ground g = go.AddComponent<Ground>();
+            SpriteRenderer renderer = go.AddComponent<SpriteRenderer>();
+
+            renderer.sprite = Resources.Load<Sprite>("HandPainted Lava Textures/Textures/04");
+            renderer.drawMode = SpriteDrawMode.Tiled;
+            renderer.tileMode = SpriteTileMode.Continuous;
+            renderer.size = sizeToPut;
+
+            
+            
+            return g;
+        }
     }
 }
