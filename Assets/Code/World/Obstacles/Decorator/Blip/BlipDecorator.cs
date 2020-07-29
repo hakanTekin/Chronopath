@@ -28,6 +28,8 @@ namespace Assets.Code.World.Obstacle.Decorator
 
         public BlipType type;
 
+        [SerializeField] private GameObject electricParticle = Resources.Load<GameObject>("JMO Assets/Cartoon FX/CFX Prefabs/Electric/CFX_ElectricityBall");
+
         /// <summary>
         /// Time interval between blipping on and off
         /// </summary>
@@ -41,6 +43,18 @@ namespace Assets.Code.World.Obstacle.Decorator
             Score = score + base.Score;
             ConfigureBlip();
             collider = this.GetGameObject().GetComponent<BoxCollider2D>();
+            if (electricParticle != null) {
+                GameObject particleSystemGO = GameObject.Instantiate(electricParticle, this.GetGameObject().transform);
+                ParticleSystem particle = particleSystemGO.GetComponent<ParticleSystem>();
+                
+                var main = particle.main;
+                var x = this.collider.bounds.size.x;
+                var y = this.collider.bounds.size.y;
+                main.startSize = x > y ? x : y;
+
+                particle.gameObject.transform.position = this.GetGameObject().transform.position;
+                particle.Play(true);
+            }
         }
 
         /// <summary>

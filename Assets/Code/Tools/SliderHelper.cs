@@ -25,7 +25,7 @@ namespace Assets.Code.Tools
         /// <param name="x"></param>
         public void ValueChange(float x)
         {
-            Debug.Log("whoop");
+
             UI.TimeMachineInput((int)x);
         }
         public void OnPointerUp(PointerEventData eventData)

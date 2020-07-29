@@ -21,6 +21,8 @@ namespace Assets.Code.World
         private Chunk[] Chunks;
         private int activeChunks = 0;
 
+        [SerializeField] Sun sun;
+
         [SerializeField] private int worldTimeAdvanceMultiplier = 1;
 
         [SerializeField] private int chunkCount = 5;
@@ -154,6 +156,10 @@ namespace Assets.Code.World
                 return false;
             }
             UpdateChunks(timeDelta:delta);
+
+            if(sun != null)
+                sun.UpdateLight(worldTime, WorldEndTime); //Change sun position and lightning
+
             return true;
         }
         /// <summary>

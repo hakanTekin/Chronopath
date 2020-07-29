@@ -63,8 +63,9 @@ public class My2DCharacterController : MonoBehaviour
         if (dir.magnitude > 0) //If there is any input given that is not zero
         {
             if (dir.x > 0.5) realSpeed.x = characterSpeed;
-            else if (dir.x < -0.5) realSpeed.x = -1 * characterSpeed;
+            else if (dir.x < -0.5 && !CameraMovement.IsInMinLimit()) realSpeed.x = -1 * characterSpeed;
             else realSpeed.x = 0;
+
             if (dir.y > 0.5 && isGrounded) Jump(jumpForce);
 
             worldSpeed = realSpeed;
@@ -75,7 +76,7 @@ public class My2DCharacterController : MonoBehaviour
             worldSpeed.x = realSpeed.x;
         }
         
-        isMovingWorld = realSpeed.x > 0f && (CameraMovement != null) && CameraMovement.isInMaxLimit();
+        isMovingWorld = realSpeed.x > 0f && (CameraMovement != null) && CameraMovement.IsInMaxLimit();
 
     }
 
@@ -112,7 +113,7 @@ public class My2DCharacterController : MonoBehaviour
     {
         foreach (KeyValuePair<Collider2D, Vector2> kvp in collisions)
         {
-            Vector2 temp = kvp.Value;
+            Vector2 temp = kvp.Value; //The direction of the reaction force
             float dotValue = Vector2.Dot(realSpeed, temp);
             if (dotValue > 0 && kvp.Key.IsTouching(collisionBox))
             {
@@ -125,7 +126,7 @@ public class My2DCharacterController : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D c)
     {
-        Vector2 reactionForceRotation = CalculateCollisionDirection(c);    
+        Vector2 reactionForceRotation = CalculateCollisionDirection(c);
         
         if (collisions.ContainsKey(c.collider)) //If the same key somehow exists, remove the old one
             collisions.Remove(c.collider);
@@ -164,7 +165,7 @@ public class My2DCharacterController : MonoBehaviour
     {
         foreach (Collider2D c in collisions.Keys.ToList())
         {
-            if (c == collision.collider)
+            if (c == collision.collider)//Remove the collision from collisions array
             {
                 collisions.Remove(c);
                 IsGrounded();

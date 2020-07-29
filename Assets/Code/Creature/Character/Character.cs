@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEditor.U2D.Path.GUIFramework;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
@@ -20,7 +21,7 @@ namespace Assets.Code.Creature.Character
         /// <summary>
         /// Time Machine of the Player
         /// </summary>
-        protected TimeMachine TimeMachine;
+        public TimeMachine TimeMachine;        
         /// <summary>
         /// Character physics handler
         /// </summary>
@@ -48,7 +49,7 @@ namespace Assets.Code.Creature.Character
             this.Timer = gameObject.AddComponent<Timer>();
             this.world = FindObjectOfType<World.World>();
             inputController = new CharacterInputs();
-
+            this.Animator = gameObject.GetComponent<Animator>();
             inputController.TimeMachine.DecreaseTime.performed += (obj) => StartIncreaseCR(obj);
             inputController.TimeMachine.IncreaseTime.performed += (obj) => StartDecreaseCR(obj);
 
@@ -85,12 +86,15 @@ namespace Assets.Code.Creature.Character
         /// <param name="deltaMultiplier">Multiplier for timeAffectionDelta<br></br>Value of 3 will change time by 3*TAD</param>
         /// <returns></returns>
         private IEnumerator IncreaseTime(){
+
             while (increaseCR_Switch) {
                 TimeMachine.ChangeTime(world,true, currentTimeMachineInput);
                 yield return new WaitForSeconds(0.2f);
             }
             increaseCR_Switch = true;
+
         }
+
         /// <summary>
         /// Decrease Time
         /// </summary>
@@ -104,6 +108,7 @@ namespace Assets.Code.Creature.Character
             }
             decreaseCR_Switch = true;
         }
+
         /// <summary>
         /// <br>Starts coroutines accordingly when timeMachine slider recieves input</br>
         /// </summary>
@@ -137,7 +142,7 @@ namespace Assets.Code.Creature.Character
                 if(decreaseTimerCoroutine == null) //if there is no current coroutine working. Initialize it.
                     decreaseTimerCoroutine = StartCoroutine(DecreaseTime());
             }
-        }
+        }        
 
         private void OnEnable()
         {
@@ -173,6 +178,13 @@ namespace Assets.Code.Creature.Character
         protected override void UpdateHealth(float dmg)
         {
             base.UpdateHealth(dmg);
+        }
+
+        public void MovementInput(Vector2 delta)
+        {
+            Controller.MovementInput(delta);
+            this.Animator.SetFloat("speed", Controller.realSpeed.x);
+            this.Animator.SetBool("jumping", !Controller.isGrounded);
         }
     }
 }
