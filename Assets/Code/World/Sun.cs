@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEditor;
-using UnityEditor.U2D.Path;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.U2D;
@@ -41,7 +40,7 @@ public class Sun : MonoBehaviour
         gameObject.GetComponent<RectTransform>().anchoredPosition = pos;
         bool isAngleIncreasing = minDegree - maxDegree > minDegree ? false : true;//TODO: find a way to change rotation
         Debug.Log((t * (maxDegree - minDegree)));
-        directionalLight.GetComponent<RectTransform>().localRotation = new Quaternion(minDegree + t*(maxDegree - minDegree), 0, 0, 0);
+        directionalLight.GetComponent<RectTransform>().rotation = Quaternion.Euler(minDegree + t*(maxDegree - minDegree), 0, 0);
             //(t * (maxDegree - minDegree)
 
 

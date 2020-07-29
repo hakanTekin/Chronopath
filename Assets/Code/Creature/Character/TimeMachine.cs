@@ -14,7 +14,7 @@ namespace Assets.Code.Creature.Character
         private int timeAffectionDelta;
         public int fuel;
 
-        public TimeMachine(int f = 100, int tad = 2)
+        public TimeMachine(int f = int.MaxValue, int tad = 2)
         {
             this.timeAffectionDelta = tad;
             this.fuel = f;

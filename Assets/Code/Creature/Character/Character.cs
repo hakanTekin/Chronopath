@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnityEditor.U2D.Path.GUIFramework;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
@@ -173,18 +172,21 @@ namespace Assets.Code.Creature.Character
         protected override void HandleAnimation()
         {
             base.HandleAnimation();
+            this.Animator.SetFloat("speed", Controller.realSpeed.x);
+            this.Animator.SetBool("jumping", !Controller.isGrounded);
         }
 
         protected override void UpdateHealth(float dmg)
         {
             base.UpdateHealth(dmg);
+
         }
 
         public void MovementInput(Vector2 delta)
         {
             Controller.MovementInput(delta);
-            this.Animator.SetFloat("speed", Controller.realSpeed.x);
-            this.Animator.SetBool("jumping", !Controller.isGrounded);
+            HandleAnimation();
+            
         }
     }
 }
