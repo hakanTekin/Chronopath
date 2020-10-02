@@ -26,6 +26,9 @@ public class Sun : MonoBehaviour
 
         }
         else directionalLight = null;
+
+        Vector3 pos = Bezier.CalculatePoint(0, pos0, pos1, pos2);
+        gameObject.GetComponent<RectTransform>().anchoredPosition = pos;
     }
     // Update is called once per frame
     void Update()
@@ -39,10 +42,6 @@ public class Sun : MonoBehaviour
         Vector3 pos = Bezier.CalculatePoint(t, pos0, pos1, pos2);
         gameObject.GetComponent<RectTransform>().anchoredPosition = pos;
         bool isAngleIncreasing = minDegree - maxDegree > minDegree ? false : true;//TODO: find a way to change rotation
-        Debug.Log((t * (maxDegree - minDegree)));
         directionalLight.GetComponent<RectTransform>().rotation = Quaternion.Euler(minDegree + t*(maxDegree - minDegree), 0, 0);
-            //(t * (maxDegree - minDegree)
-
-
     }
 }

@@ -33,7 +33,6 @@ namespace Assets.Code.World.Obstacles.Decorator.Blip
 
         public override void UpdateObstacle()
         {
-
             wrappee.UpdateObstacle();
         }
     }

@@ -45,10 +45,10 @@ namespace Assets.Code.World
         private static int GenerateGround(Chunk chunk)
         {
             Vector2 groundSize;
-            groundSize.y = chunk.Size.y * 0.1f; //One Tenth of the chunk (vertically) is ground
+            groundSize.y = chunk.Size.y * 2f; //One Tenth of the chunk (vertically) is ground
             groundSize.x = chunk.Size.x;
             Vector2 pos = chunk.gameObject.transform.position;
-            pos.y -= (chunk.Size.y / 2 + groundSize.y);
+            pos.y -= (chunk.Size.y / 2 + groundSize.y/2);
             Ground g = ObjectFactory.CreateGround(pos, groundSize);
             g.transform.SetParent(chunk.transform);
             return 0;

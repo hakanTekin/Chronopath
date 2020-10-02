@@ -20,35 +20,69 @@ public class My2DCharacterController : MonoBehaviour
     /// </summary>
     private Vector2 worldSpeed;
 
+    /// <summary>
+    /// Sprite renderer of the attached character
+    /// </summary>
+    private SpriteRenderer renderer;
+
     public Rigidbody2D rigid;
 
+    /// <summary>
+    /// Wether to move the character or the world
+    /// </summary>
     private bool isMovingWorld;
 
     private Dictionary<Collider2D, Vector2> collisions = new Dictionary<Collider2D, Vector2>();
 
-
+    //Character jump and movement variables
     public bool isGrounded;
     public float characterSpeed = 10;
     public float jumpForce = 30;
 
+    //Standing and Crouching variables
+    [SerializeField] private Vector2 standingColliderSize, crouchingColliderSize;
+    [SerializeField] private Vector2 standingColliderPos, crouchingColliderPos;
+    /// <summary>
+    /// <br>If true, a method will be called to calculate crouched position and size according to current size.</br>
+    /// <br>If false, values given in the editor will be used</br>
+    /// </summary>
+    [SerializeField] private bool calculateColliderPositions = false;
 
     private Vector2 groundDetectionCheckPosition;
     private Vector2 groundCheckBoxSize;
 
     public CameraMovement CameraMovement;
     private World World;
+    public bool isCrouching;
 
     void Start()
     {
         isGrounded = false;
         collisionBox.enabled = true;        
-        rigid.bodyType = RigidbodyType2D.Kinematic;
-        groundCheckBoxSize = new Vector2(collisionBox.bounds.extents.x, 0.02f);
+        groundCheckBoxSize = new Vector2(collisionBox.bounds.extents.x, 0.1f);
         World = FindObjectOfType<World>();
         if(CameraMovement == null)
         {
             CameraMovement = FindObjectOfType<Camera>().GetComponent<CameraMovement>();
         }
+
+        renderer = gameObject.GetComponent<SpriteRenderer>();
+
+        //Calculate crouched position and collider size if bool value is set to true in the editor
+        if (calculateColliderPositions) CalculateCrouchAndStand();
+    }
+    /// <summary>
+    /// <br>Private method called only once when the controller is initiated.</br>
+    /// <br>Current position and collider size is used for standing, crouch is half of the original collider size (it is positioned in the lower half of character)</br>
+    /// </summary>
+    private void CalculateCrouchAndStand()
+    {
+        standingColliderPos = collisionBox.offset;
+        standingColliderSize = collisionBox.bounds.size;
+
+        crouchingColliderSize = standingColliderSize / 2;
+        crouchingColliderPos = standingColliderPos;
+        crouchingColliderPos.y -= crouchingColliderSize.y / 2;
     }
 
     void Update()
@@ -66,18 +100,46 @@ public class My2DCharacterController : MonoBehaviour
             else if (dir.x < -0.5 && !CameraMovement.IsInMinLimit()) realSpeed.x = -1 * characterSpeed;
             else realSpeed.x = 0;
 
-            if (dir.y > 0.5 && isGrounded) Jump(jumpForce);
-
+            if (dir.y > 0.5 && isGrounded)
+            {
+                Jump(jumpForce);
+                isCrouching = false;
+                Crouch(isCrouching);
+            }
+            else if (dir.y < -0.5 && isGrounded) {
+                isCrouching = true;
+                Crouch(isCrouching);
+            }
             worldSpeed = realSpeed;
         }
         else //if dir is zero, maybe a keyboard button is pressed
         {
+
+            Crouch(false);//if there is no input, then remove crouching
+
             realSpeed.x = Input.GetAxis("Horizontal") * characterSpeed;
             worldSpeed.x = realSpeed.x;
+
         }
-        
+
+        if (realSpeed.x < 0f) renderer.flipX = true;
+        else if(realSpeed.x > 0f) renderer.flipX = false;
+
         isMovingWorld = realSpeed.x > 0f && (CameraMovement != null) && CameraMovement.IsInMaxLimit();
 
+    }
+
+    private void Crouch(bool isCrouching)
+    {
+        if (isCrouching)
+        {
+            collisionBox.offset = crouchingColliderPos;
+            collisionBox.size = crouchingColliderSize;
+        }
+        else {
+            collisionBox.offset = standingColliderPos;
+            collisionBox.size = standingColliderSize;
+        }
     }
 
     void FixedUpdate()
@@ -89,7 +151,6 @@ public class My2DCharacterController : MonoBehaviour
         if (isGrounded && realSpeed.y < 0)
         {
             realSpeed.y = 0;
-            
         }
             
 
@@ -198,8 +259,6 @@ public class My2DCharacterController : MonoBehaviour
         int hitCount = Physics2D.OverlapBoxNonAlloc(groundDetectionCheckPosition, groundCheckBoxSize, 0f, collider2);
        
         for(int i = 0; i<hitCount; i++)
-           
-
         if (hitCount >= 2) 
             isGrounded = true; //If there are two, its either player + one more object or 2 objects. Either case means there is ground
         else if (hitCount == 1)

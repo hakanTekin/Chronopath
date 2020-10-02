@@ -145,13 +145,14 @@ namespace Assets.Code.Creature.Character
 
         private void OnEnable()
         {
-            Assert.IsNotNull(inputController);
-            inputController.Enable();
+            if(inputController != null)
+                inputController.Enable();
         }
 
         private void OnDisable()
         {
-            inputController.Disable();
+            if(inputController != null)
+                inputController.Disable();
         }
 
         public override string ToString()
@@ -162,6 +163,7 @@ namespace Assets.Code.Creature.Character
         protected override void Attack(float dmg)
         {
             base.Attack(dmg);
+            
         }
 
         protected override bool Death()
@@ -172,8 +174,9 @@ namespace Assets.Code.Creature.Character
         protected override void HandleAnimation()
         {
             base.HandleAnimation();
-            this.Animator.SetFloat("speed", Controller.realSpeed.x);
+            this.Animator.SetFloat("speed", Math.Abs(Controller.realSpeed.x));
             this.Animator.SetBool("jumping", !Controller.isGrounded);
+            this.Animator.SetBool("crouching", Controller.isCrouching);
         }
 
         protected override void UpdateHealth(float dmg)

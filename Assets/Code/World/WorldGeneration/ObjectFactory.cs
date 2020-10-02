@@ -122,8 +122,6 @@ namespace Assets.Code.World.WorldGeneration
             renderer.tileMode = SpriteTileMode.Continuous;
             renderer.size = sizeToPut;
 
-            
-            
             return g;
         }
     }
