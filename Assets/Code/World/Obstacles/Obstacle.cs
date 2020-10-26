@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace Assets.Code.World.Obstacle
 {
-    class Obstacle : MonoBehaviour, IObstacle
+    class Obstacle : MonoBehaviour, IObstacle, IDamageable
     {
 
         SpriteShape shape;
@@ -95,6 +95,19 @@ namespace Assets.Code.World.Obstacle
         bool AssignCoroutine(IEnumerator coroutine)
         {
             StartCoroutine(coroutine);
+            return true;
+        }
+
+        public bool GetDamage(float dmg)
+        {
+            return Death();
+            
+        }
+
+        public bool Death()
+        {
+            Debug.Log("This obstacle dies");
+            Destroy(this.gameObject);
             return true;
         }
     }

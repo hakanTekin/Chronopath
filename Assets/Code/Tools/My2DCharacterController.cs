@@ -6,6 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+
+/// <summary>
+/// <br>This class is about movement controls. It implements a simple collision system for kinematic Rigid bodies. This collision system can be disabled.</br>
+/// <br>This class checks for ground checks <see cref="IsGrounded"/></br>
+/// </summary>
 public class My2DCharacterController : MonoBehaviour
 {
     public BoxCollider2D collisionBox;

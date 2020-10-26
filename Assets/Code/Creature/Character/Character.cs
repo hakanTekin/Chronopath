@@ -30,6 +30,13 @@ namespace Assets.Code.Creature.Character
         /// </summary>
         private CharacterInputs inputController;
         /// <summary>
+        /// Vector3 indicating the weapon hit range From the right edge of character collider (from half height)
+        /// </summary>
+        [SerializeField]
+        private Vector3 weaponVector;
+
+        private bool isAttacking;
+        /// <summary>
         /// When slider is held, in what interval should world time change.
         /// </summary>
         [SerializeField] private float timeMachineInputRepeatInterval = 0.3f;
@@ -42,6 +49,7 @@ namespace Assets.Code.Creature.Character
 
         private void Awake()
         {
+            Time.timeScale = 1;
             Controller = gameObject.GetComponent<My2DCharacterController>();
             this.TimeMachine = new TimeMachine();//Creates a timemachine with default values
             this.Score = gameObject.AddComponent<Score>();
@@ -54,12 +62,23 @@ namespace Assets.Code.Creature.Character
 
             inputController.TimeMachine.DecreaseTime.canceled += (obj) => { decreaseCR_Switch = false; world.TimerStartStopState(true); };
             inputController.TimeMachine.IncreaseTime.canceled += (obj) => { increaseCR_Switch = false; world.TimerStartStopState(true); };
+
+            this.isAttacking = false;
         }
         /// <summary>
         /// <br>Starts coroutine for increasing world time.</br>
         /// <br>For timeMachine usage. Automatic world time step has its own coroutine</br>
         /// </summary>
         /// <param name="obj"></param>
+
+        private void FixedUpdate()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Attack(Damage);
+            }
+        }
+
         public void StartIncreaseCR(InputAction.CallbackContext obj){
             world.TimerStartStopState(false);
             decreaseTimerCoroutine = StartCoroutine(DecreaseTime());
@@ -159,16 +178,38 @@ namespace Assets.Code.Creature.Character
         {
             return base.ToString();
         }
-        
+
+        public void Attack() {
+            Attack(Damage);
+            Debug.Log("Attackin");
+
+        }
         protected override void Attack(float dmg)
         {
-            base.Attack(dmg);
-            
-        }
-
-        protected override bool Death()
-        {
-            return base.Death();
+            isAttacking = true;
+            this.Animator.SetTrigger("attack");
+            Vector3 pos = Controller.collisionBox.bounds.center;
+            pos.x += Controller.collisionBox.bounds.size.x/2 + 0.2f; //Right side of the collision box + some margin
+            pos.y -= Controller.collisionBox.bounds.size.y/2 + 0.1f;
+            Vector3 to = pos + weaponVector;
+            RaycastHit2D[] hits = Physics2D.RaycastAll(pos, to);
+            foreach (RaycastHit2D hit in hits)
+            {
+                if (hit == true)
+                {
+                    if (hit.collider.gameObject == this.gameObject)
+                    {
+                        Debug.Log("Character hit itself");
+                    }
+                    else
+                    {
+                        hit.collider.gameObject.BroadcastMessage("GetDamage", 20);
+                    }
+                    base.Attack(dmg);
+                }
+            }
+            Debug.DrawLine(pos, to);
+            isAttacking = false;
         }
 
         protected override void HandleAnimation()

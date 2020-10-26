@@ -454,6 +454,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 852961641, guid: 7a54cb832a02af94c88dd0c11564f3fe, type: 3}
+      propertyPath: weaponVector.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 852961641, guid: 7a54cb832a02af94c88dd0c11564f3fe, type: 3}
+      propertyPath: weaponVector.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 852961642, guid: 7a54cb832a02af94c88dd0c11564f3fe, type: 3}
       propertyPath: m_Camera
       value: 

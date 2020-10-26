@@ -62,6 +62,8 @@ namespace Assets.Code.World
             int curScore = 0;
             for (int i = 0; i < chunk.Obstacles.Length; i++)
             {
+                //If there are too many objects(determined by chunk score) on the chunk, 
+                //stop creating new ones.
                 if(chunk.MaxObjectScore > curScore)
                 {
                     //Instantiate a gameobject and decorate its obstacle component

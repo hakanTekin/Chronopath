@@ -108,27 +108,28 @@ namespace Assets.Code.World
         }
         public Chunk CreateNewChunk()
         {
-                //If there is not enough room in the chunk buffer, no chunk should be created
+            //If there is not enough room in the chunk buffer, no chunk should be created
+            if (activeChunks >= Chunks.Length)
+            {
                 //In theory, this exception should never be thrown since chunks should be deleted after player passes them 
-                    //(and the further buffers should be no more than the buffer size)
-                if (activeChunks >= Chunks.Length)
-                    throw new Exception("Chunk Buffer Full");
+                Debug.LogError("Chunk buffer full");
+                throw new Exception("Chunk buffer full");
+            }
 
-                Chunk chunk = WorldGenerator.GenerateChunk(new Vector2(GetRightmost(), 0), activeCamera);
-                activeChunks++;
-                chunksCreated++;
-                for(int i = 0; i<Chunks.Length; i++)
+            Chunk chunk = WorldGenerator.GenerateChunk(new Vector2(GetRightmost(), 0), activeCamera);
+            activeChunks++;
+            chunksCreated++;
+
+            //Find an empty spot for chunk and place it.
+            for(int i = 0; i<Chunks.Length; i++)
+            {
+                if (Chunks[i] == null)
                 {
-                    if (Chunks[i] == null)
-                    {
-                        Chunks[i] = chunk;
-                        break;
-                    }
-
+                    Chunks[i] = chunk;
+                    break;
                 }
-                return chunk;
-
-                    
+            }
+            return chunk;      
         }
         private int RemoveUnusedChunks(int index)
         {

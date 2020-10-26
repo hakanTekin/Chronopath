@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Assets.Code.Tools
@@ -17,6 +18,9 @@ namespace Assets.Code.Tools
         private Text ScoreText;
 
         public GameObject pauseMenu;
+        public GameObject pauseButton;
+
+        public Button attackButton;
 
 
         private Character character;
@@ -27,13 +31,19 @@ namespace Assets.Code.Tools
         private Joystick joystick;
         private void Start()
         {
+            isMenuOpen = false;
             character = GetComponentInParent<Character>();
             //Text Elements Setup
 
             TimerText = TimerGO.GetComponent<Text>();
             ScoreText = ScoreGO.GetComponent<Text>();
+            if(attackButton == null)
+                attackButton = gameObject.GetComponentInChildren<Button>();
+
+            attackButton.onClick.AddListener(character.Attack);
 
             joystick = gameObject.GetComponentInChildren<FixedJoystick>();
+
         }
 
         private void Update()
@@ -69,12 +79,13 @@ namespace Assets.Code.Tools
                 character.TimeMachineSliderInput(x);
             return false;
         }
-        public void Menu()
+        public void Menu(bool isForced = false)
         {
             if (isMenuOpen)
             {
                 pauseMenu.SetActive(false);
                 isMenuOpen = false;
+                pauseButton.SetActive(true);
                 Time.timeScale = 1;
                 //Close menu
             }
@@ -82,9 +93,28 @@ namespace Assets.Code.Tools
             {
                 pauseMenu.SetActive(true);
                 isMenuOpen = true;
+                if (!isForced) {
+                    Button[] buttons = pauseMenu.GetComponents<Button>();
+                    foreach (Button item in buttons)
+                    {
+                        if (item.name == "ResumeButton")
+                            item.gameObject.SetActive(false);
+                    }
+                }
+                pauseButton.SetActive(false);
                 //Open menu
                 Time.timeScale = 0;
             }
+        }
+
+        public void RestartLevel()
+        {
+            SceneManager.LoadScene(1);
+        }
+
+        public void ReturnToMenu()
+        {
+            SceneManager.LoadScene(0);
         }
     }
 }

@@ -89,7 +89,18 @@ namespace Assets.Code.World.Chunks
                     return true;
                 }
             }
-
+            return false;
+        }
+        public bool RemoveObstacle(IObstacle obstacle)
+        {
+            for (int i = 0; i < obstacles.Length; i++)
+            {
+                if (obstacle.Equals(obstacles[i]))
+                {
+                    obstacles[i] = null;
+                    return true;
+                }
+            }
             return false;
         }
     }
